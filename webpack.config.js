@@ -19,7 +19,7 @@ module.exports = {
       {
         test: /\.(png|jpg|gif)$/i,
         loader: 'url-loader',
-        options: { limit: 10000}
+        options: { limit: 25000}
       }
     ]
   },
