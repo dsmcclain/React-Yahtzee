@@ -4,7 +4,8 @@
   "description": "A React App Built by dsmcclain",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "build": "babel src -d lib",
+    "test": ""
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/dsmcclain/react-sample-app/issues"
   },
-  "homepage": "https://github.com/dsmcclain/react-sample-app#readme"
+  "homepage": "https://github.com/dsmcclain/react-sample-app#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0"
+  }
 }
