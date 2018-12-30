@@ -1,0 +1,19 @@
+{
+  "name": "react-sample-app",
+  "version": "1.0.0",
+  "description": "A React App Built by dsmcclain",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsmcclain/react-sample-app.git"
+  },
+  "author": "dsmcclain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dsmcclain/react-sample-app/issues"
+  },
+  "homepage": "https://github.com/dsmcclain/react-sample-app#readme"
+}
