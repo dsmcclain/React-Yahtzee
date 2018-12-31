@@ -32,11 +32,13 @@ class DiceBar extends Component {
 
 	render () {
 		return (
-			<div className="dice-bar">
+			<div className="dice-area">
 				<button id="roll-btn"
-						className="roll-button"
-						onClick={this.onClick}>Roll!</button>
-				<img src={this.state.pips} alt="pips" />
+							className="roll-button"
+							onClick={this.onClick}>Roll!</button>
+				<div className="dice-bar">
+					<img src={this.state.pips} alt="pips" />
+				</div>
 			</div>
 		);
 	}
