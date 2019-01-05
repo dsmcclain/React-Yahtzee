@@ -15,6 +15,9 @@ class DiceBar extends Component {
 		this.state = {
 			pipsA: one,
 			pipsB: two,
+			pipsC: three,
+			pipsD: four,
+			pipsE: five,
 		}
 		this.onClick = this.onClick.bind(this);
 	}
@@ -27,6 +30,15 @@ class DiceBar extends Component {
 
 		roll = Math.floor(Math.random() * 6);
 		this.setState({ pipsB: pipsArr[roll]});
+
+		roll = Math.floor(Math.random() * 6);
+		this.setState({ pipsC: pipsArr[roll]});
+
+		roll = Math.floor(Math.random() * 6);
+		this.setState({ pipsD: pipsArr[roll]});
+
+		roll = Math.floor(Math.random() * 6);
+		this.setState({ pipsE: pipsArr[roll]});
 	}
 
 	render () {
@@ -36,10 +48,11 @@ class DiceBar extends Component {
 							className="roll-button"
 							onClick={this.onClick}>Roll!</button>
 				<div className="dice-bar">
-					<img src={this.state.pipsA} alt="pips" />
-				</div>
-				<div className="dice-bar">
-					<img src={this.state.pipsB} alt="pips" />
+					<img src={this.state.pipsA} alt="dice-one" />
+					<img src={this.state.pipsB} alt="dice-two" />
+					<img src={this.state.pipsC} alt="dice-three" />
+					<img src={this.state.pipsD} alt="dice-four" />
+					<img src={this.state.pipsE} alt="dice-five" />
 				</div>
 			</div>
 		);
