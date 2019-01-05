@@ -13,21 +13,20 @@ class DiceBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			pips: one,
+			pipsA: one,
+			pipsB: two,
 		}
 		this.onClick = this.onClick.bind(this);
-		this.rollDice = this.rollDice.bind(this);
 	}
 
 	onClick() {
-		let roll = Math.floor(Math.random() * 6);
-		this.rollDice(roll);
-	}
-
-	rollDice(roll) {
 		const pipsArr = [one, two, three, four, five, six];
-		console.log(roll);
-		this.setState({ pips: pipsArr[roll]});
+
+		let roll = Math.floor(Math.random() * 6);
+		this.setState({ pipsA: pipsArr[roll]});
+
+		roll = Math.floor(Math.random() * 6);
+		this.setState({ pipsB: pipsArr[roll]});
 	}
 
 	render () {
@@ -37,7 +36,10 @@ class DiceBar extends Component {
 							className="roll-button"
 							onClick={this.onClick}>Roll!</button>
 				<div className="dice-bar">
-					<img src={this.state.pips} alt="pips" />
+					<img src={this.state.pipsA} alt="pips" />
+				</div>
+				<div className="dice-bar">
+					<img src={this.state.pipsB} alt="pips" />
 				</div>
 			</div>
 		);
