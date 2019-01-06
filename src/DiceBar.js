@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
+import Dice from "./Dice.js";
 import "./DiceBar.css";
-
-// import images of dice faces
-import one from './images/one.png';
-import two from './images/two.png';
-import three from './images/three.png';
-import four from './images/four.png';
-import five from './images/five.png';
-import six from './images/six.png';
 
 class DiceBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			images: [one, two, three, four, five, six],
 			pipsA: 0,
 			pipsB: 1,
 			pipsC: 2,
@@ -48,11 +40,11 @@ class DiceBar extends Component {
 							className="roll-button"
 							onClick={this.clickHandler}>Roll!</button>
 				<div className="dice-bar">
-					<img src={this.state.images[this.state.pipsA]} alt="dice-one" />
-					<img src={this.state.images[this.state.pipsB]} alt="dice-two" />
-					<img src={this.state.images[this.state.pipsC]} alt="dice-three" />
-					<img src={this.state.images[this.state.pipsD]} alt="dice-four" />
-					<img src={this.state.images[this.state.pipsE]} alt="dice-five" />
+					<Dice pips={this.state.pipsA} />
+					<Dice pips={this.state.pipsB} />
+					<Dice pips={this.state.pipsC} />
+					<Dice pips={this.state.pipsD} />
+					<Dice pips={this.state.pipsE} />
 				</div>
 			</div>
 		);
