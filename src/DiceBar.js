@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import "./DiceBar.css";
 
+// import images of dice faces
 import one from './images/one.png';
 import two from './images/two.png';
 import three from './images/three.png';
@@ -13,32 +14,31 @@ class DiceBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			pipsA: one,
-			pipsB: two,
-			pipsC: three,
-			pipsD: four,
-			pipsE: five,
+			images: [one, two, three, four, five, six],
+			pipsA: 0,
+			pipsB: 1,
+			pipsC: 2,
+			pipsD: 3,
+			pipsE: 4,
 		}
-		this.onClick = this.onClick.bind(this);
+		this.clickHandler = this.clickHandler.bind(this);
 	}
 
-	onClick() {
-		const pipsArr = [one, two, three, four, five, six];
+	// use random number to assign images for each dice
+	clickHandler() {
+		const rollA = Math.floor(Math.random() * 6);
+		const rollB = Math.floor(Math.random() * 6);
+		const rollC = Math.floor(Math.random() * 6);
+		const rollD = Math.floor(Math.random() * 6);
+		const rollE = Math.floor(Math.random() * 6);
 
-		let roll = Math.floor(Math.random() * 6);
-		this.setState({ pipsA: pipsArr[roll]});
-
-		roll = Math.floor(Math.random() * 6);
-		this.setState({ pipsB: pipsArr[roll]});
-
-		roll = Math.floor(Math.random() * 6);
-		this.setState({ pipsC: pipsArr[roll]});
-
-		roll = Math.floor(Math.random() * 6);
-		this.setState({ pipsD: pipsArr[roll]});
-
-		roll = Math.floor(Math.random() * 6);
-		this.setState({ pipsE: pipsArr[roll]});
+		this.setState({
+			pipsA: rollA,
+			pipsB: rollB,
+			pipsC: rollC,
+			pipsD: rollD,
+			pipsE: rollE,
+		});
 	}
 
 	render () {
@@ -46,13 +46,13 @@ class DiceBar extends Component {
 			<div className="dice-area">
 				<button id="roll-btn"
 							className="roll-button"
-							onClick={this.onClick}>Roll!</button>
+							onClick={this.clickHandler}>Roll!</button>
 				<div className="dice-bar">
-					<img src={this.state.pipsA} alt="dice-one" />
-					<img src={this.state.pipsB} alt="dice-two" />
-					<img src={this.state.pipsC} alt="dice-three" />
-					<img src={this.state.pipsD} alt="dice-four" />
-					<img src={this.state.pipsE} alt="dice-five" />
+					<img src={this.state.images[this.state.pipsA]} alt="dice-one" />
+					<img src={this.state.images[this.state.pipsB]} alt="dice-two" />
+					<img src={this.state.images[this.state.pipsC]} alt="dice-three" />
+					<img src={this.state.images[this.state.pipsD]} alt="dice-four" />
+					<img src={this.state.images[this.state.pipsE]} alt="dice-five" />
 				</div>
 			</div>
 		);
