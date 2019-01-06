@@ -9,18 +9,10 @@ import four from './images/four.png';
 import five from './images/five.png';
 import six from './images/six.png';
 
-class Dice extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			images: [one, two, three, four, five, six]
-		}
-	}
-
-	render() {
-		return (
-			<img src={this.state.images[this.props.pips]} />
-		);
-	}
+function Dice(props){
+	const images = [one, two, three, four, five, six]
+	return (
+		<img src={images[props.pips]} />
+	);
 }
 export default hot(module)(Dice);
