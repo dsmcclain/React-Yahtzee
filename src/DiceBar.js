@@ -7,11 +7,11 @@ class DiceBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			diceA: {pips: 0, hold: false},
-			diceB: {pips: 0, hold: false},
-			diceC: {pips: 0, hold: false},
-			diceD: {pips: 0, hold: false},
-			diceE: {pips: 0, hold: false},
+			pipsA: 0,
+			pipsB: 0,
+			pipsC: 0,
+			pipsD: 0,
+			pipsE: 0,
 		}
 		this.clickHandler = this.clickHandler.bind(this);
 	}
@@ -25,11 +25,11 @@ class DiceBar extends Component {
 		const rollE = Math.floor(Math.random() * 6);
 
 		this.setState({
-			diceA: {pips: rollA},
-			diceB: {pips: rollB},
-			diceC: {pips: rollC},
-			diceD: {pips: rollD},
-			diceE: {pips: rollE},
+			pipsA: rollA,
+			pipsB: rollB,
+			pipsC: rollC,
+			pipsD: rollD,
+			pipsE: rollE,
 		});
 	}
 
@@ -40,11 +40,11 @@ class DiceBar extends Component {
 							className="roll-button"
 							onClick={this.clickHandler}>Roll!</button>
 				<div className="dice-bar">
-					<Dice pips={this.state.diceA.pips} />
-					<Dice pips={this.state.diceB.pips} />
-					<Dice pips={this.state.diceC.pips} />
-					<Dice pips={this.state.diceD.pips} />
-					<Dice pips={this.state.diceE.pips} />
+					<Dice pips={this.state.pipsA} />
+					<Dice pips={this.state.pipsB} />
+					<Dice pips={this.state.pipsC} />
+					<Dice pips={this.state.pipsD} />
+					<Dice pips={this.state.pipsE} />
 				</div>
 			</div>
 		);
