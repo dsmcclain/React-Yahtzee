@@ -1,3 +1,6 @@
+.dice-bar {
+	display: flex;
+}
 .dice-bar img {
 	width: 150px;
 	height: auto;
