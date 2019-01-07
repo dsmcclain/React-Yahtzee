@@ -4,6 +4,8 @@
 .dice-bar {
 	display: flex;
 	border: 5px solid #000;
+	justify-content: space-between;
+	width: 60vw;
 }
 .dice-bar img {
 	display: block;
