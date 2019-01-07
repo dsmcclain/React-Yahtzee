@@ -1,7 +1,32 @@
+.roll-button {
+	margin: 2em;
+}
+.dice-bar {
+	display: flex;
+	border: 5px solid #000;
+	justify-content: space-between;
+	width: 60vw;
+}
 .dice-bar img {
+	display: block;
 	width: 150px;
 	height: auto;
 }
-.roll-button {
-	margin: 2em;
+.dice-bar > .dice-container {
+	margin: .5em;
+}
+.dice-bar > .hold {
+	border: 10px solid #F00;
+}
+
+/* STYLES TO MAKE CHECKBOXES INVISIBLE */
+input[type="checkbox"] {
+	display: none;
+	outline: none;
+}
+.toggle-hold-label {
+	display: inline-block;
+	cursor: pointer;
+	width: 150px;
+	height: auto;
 }

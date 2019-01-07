@@ -8,10 +8,10 @@ class DiceBar extends Component {
 		super(props);
 		this.state = {
 			pipsA: 0,
-			pipsB: 1,
-			pipsC: 2,
-			pipsD: 3,
-			pipsE: 4,
+			pipsB: 0,
+			pipsC: 0,
+			pipsD: 0,
+			pipsE: 0,
 		}
 		this.clickHandler = this.clickHandler.bind(this);
 	}
