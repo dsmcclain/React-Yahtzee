@@ -12,22 +12,13 @@ import six from './images/six.png';
 class Dice extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			hold: false,
-		}
-		this.holdDice = this.holdDice.bind(this);
-	}
-
-	holdDice() {
-		this.setState({ hold: !this.state.hold })
-		console.log('state is now ' + this.state.hold);
 	}
 
 	render() {
 		const images = [one, two, three, four, five, six]
 		return (
-			<div className={`dice-container ${this.state.hold ? "hold" : "free"}`}>
-				<img src={images[this.props.pips]} onClick={this.holdDice} />
+			<div className={`dice-container ${this.props.hold ? "hold" : "free"}`}>
+				<img src={images[this.props.pips]} onClick={this.props.callback} />
 			</div>
 		);
 	}

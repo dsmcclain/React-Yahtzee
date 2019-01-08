@@ -7,30 +7,37 @@ class DiceBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			pipsA: 0,
-			pipsB: 0,
-			pipsC: 0,
-			pipsD: 0,
-			pipsE: 0,
+			hold: true,
+			DiceA: {pips: 0, hold: true},
+			DiceB: {pips: 0, hold: false},
+			DiceC: {pips: 0, hold: false},
+			DiceD: {pips: 0, hold: false},
+			DiceE: {pips: 0, hold: false}
 		}
 		this.clickHandler = this.clickHandler.bind(this);
+		this.holdCallback = this.holdCallback.bind(this);
 	}
 
 	// use random number to assign images for each dice
 	clickHandler() {
-		const rollA = Math.floor(Math.random() * 6);
-		const rollB = Math.floor(Math.random() * 6);
-		const rollC = Math.floor(Math.random() * 6);
-		const rollD = Math.floor(Math.random() * 6);
-		const rollE = Math.floor(Math.random() * 6);
+		const rollA = this.state.hold ? this.state.DiceA.pips : Math.floor(Math.random() * 6);
+		const rollB = this.state.DiceB.hold ? this.state.DiceB.pips : Math.floor(Math.random() * 6);
+		const rollC = this.state.DiceC.hold ? this.state.DiceC.pips : Math.floor(Math.random() * 6);
+		const rollD = this.state.DiceD.hold ? this.state.DiceD.pips : Math.floor(Math.random() * 6);
+		const rollE = this.state.DiceE.hold ? this.state.DiceE.pips : Math.floor(Math.random() * 6);
 
 		this.setState({
-			pipsA: rollA,
-			pipsB: rollB,
-			pipsC: rollC,
-			pipsD: rollD,
-			pipsE: rollE,
+			DiceA: {pips: rollA},
+			DiceB: {pips: rollB},
+			DiceC: {pips: rollC},
+			DiceD: {pips: rollD},
+			DiceE: {pips: rollE}
 		});
+	}
+
+	holdCallback() {
+		console.log("callback!");
+		this.setState({ hold: !this.state.hold })
 	}
 
 	render () {
@@ -40,11 +47,11 @@ class DiceBar extends Component {
 							className="roll-button"
 							onClick={this.clickHandler}>Roll!</button>
 				<div className="dice-bar">
-					<Dice pips={this.state.pipsA} />
-					<Dice pips={this.state.pipsB} />
-					<Dice pips={this.state.pipsC} />
-					<Dice pips={this.state.pipsD} />
-					<Dice pips={this.state.pipsE} />
+					<Dice pips={this.state.DiceA.pips} hold={this.state.hold} callback={this.holdCallback}/>
+					<Dice pips={this.state.DiceB.pips} hold={this.state.DiceB.hold} />
+					<Dice pips={this.state.DiceC.pips} hold={this.state.DiceC.hold} />
+					<Dice pips={this.state.DiceD.pips} hold={this.state.DiceD.hold} />
+					<Dice pips={this.state.DiceE.pips} hold={this.state.DiceE.hold} />
 				</div>
 			</div>
 		);
