@@ -19,7 +19,7 @@ class Dice extends Component {
 		this.holdDice = this.holdDice.bind(this);
 	}
 
-	// if roll button is clicked in DiceBar.js && if hold state is false
+	// two conditions: if roll button is clicked in DiceBar.js && if hold state is false
 	componentDidUpdate(prevProps) {
 		if (this.props.roll !== prevProps.roll) {
 			if (!this.state.hold) {

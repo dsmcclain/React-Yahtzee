@@ -6,6 +6,8 @@
 	border: 5px solid #000;
 	justify-content: space-between;
 	width: 60vw;
+	height: 185px;
+	align-items: center;
 }
 .dice-bar img {
 	display: block;
