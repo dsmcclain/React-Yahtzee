@@ -8,13 +8,15 @@ class DiceBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			roll: false,
+			roll: 0,
 		}
 		this.handleClick = this.handleClick.bind(this);
 	}
 
 	handleClick() {
-		this.setState({roll: !this.state.roll});
+		const rollCount = this.state.roll;
+		this.setState({roll: rollCount + 1});
+		console.log(rollCount);
 	}
 
 	render () {
