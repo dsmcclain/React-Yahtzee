@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import Dice from "./Dice.js";
+import RollButton from "./RollButton.js"
 import "./DiceBar.css";
 
 class DiceBar extends Component {
@@ -9,19 +10,17 @@ class DiceBar extends Component {
 		this.state = {
 			roll: false,
 		}
-		this.clickHandler = this.clickHandler.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
 
-	clickHandler() {
+	handleClick() {
 		this.setState({roll: !this.state.roll});
 	}
 
 	render () {
 		return (
 			<div className="dice-area">
-				<button id="roll-btn"
-							className="roll-button"
-							onClick={this.clickHandler}>Roll!</button>
+					<RollButton handleClick={this.handleClick}/>
 				<div className="dice-bar">
 					<Dice roll={this.state.roll} />
 					<Dice roll={this.state.roll} />
