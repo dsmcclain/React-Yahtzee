@@ -11,8 +11,9 @@ class RollButton extends Component {
 	render () {
 		return (
 				<button id="roll-btn"
-						className="roll-button"
-						onClick={this.props.handleClick}>Roll!</button>
+						className={`roll-button${this.props.roll === 3? '-reroll' : ''}`}
+						onClick={this.props.handleClick}>
+						{this.props.roll === 3? 'Reroll!' : 'Roll!'}</button>
 		)
 	}
 }

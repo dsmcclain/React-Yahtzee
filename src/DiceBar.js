@@ -30,7 +30,7 @@ class DiceBar extends Component {
 	render () {
 		return (
 			<div className="dice-area">
-					<RollButton handleClick={this.handleClick}/>
+					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
 					<h1>You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h1>
 				<div className="dice-bar">
 					<Dice roll={this.state.roll} reroll={this.state.reroll} />
