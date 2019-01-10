@@ -9,26 +9,35 @@ class DiceBar extends Component {
 		super(props);
 		this.state = {
 			roll: 0,
+			reroll: false,
 		}
 		this.handleClick = this.handleClick.bind(this);
 	}
 
 	handleClick() {
-		const rollCount = this.state.roll;
-		this.setState({roll: rollCount + 1});
-		console.log(rollCount);
+		if (this.state.roll === 3) {
+			this.setState({ 
+				reroll: true,
+				roll: 0,
+			})
+		} else {
+			this.setState({ reroll: false });
+			const rollCount = this.state.roll;
+			this.setState({roll: rollCount + 1});
+		}
 	}
 
 	render () {
 		return (
 			<div className="dice-area">
 					<RollButton handleClick={this.handleClick}/>
+					<h1>You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h1>
 				<div className="dice-bar">
-					<Dice roll={this.state.roll} />
-					<Dice roll={this.state.roll} />
-					<Dice roll={this.state.roll} />
-					<Dice roll={this.state.roll} />
-					<Dice roll={this.state.roll} />
+					<Dice roll={this.state.roll} reroll={this.state.reroll} />
+					<Dice roll={this.state.roll} reroll={this.state.reroll} />
+					<Dice roll={this.state.roll} reroll={this.state.reroll} />
+					<Dice roll={this.state.roll} reroll={this.state.reroll} />
+					<Dice roll={this.state.roll} reroll={this.state.reroll} />
 				</div>
 			</div>
 		);

@@ -17,16 +17,25 @@ class Dice extends Component {
 			pips: 0,
 		}
 		this.holdDice = this.holdDice.bind(this);
+		this.reroll = this.reroll.bind(this);
 	}
 
-	// two conditions: if RollButton is clicked && if hold state is false
+	// if roll button is clicked, check if reroll, else check if dice has hold
 	componentDidUpdate(prevProps) {
 		if (this.props.roll !== prevProps.roll) {
-			if (!this.state.hold) {
+			if (this.props.reroll) {
+				this.reroll();
+			} else if (!this.state.hold) {
 				const num = Math.floor(Math.random() * 6);
 				this.setState({pips: num});
 			}
 		}
+	}
+
+	reroll() {
+		this.setState({ hold: false });
+		const num = Math.floor(Math.random() * 6);
+		this.setState({pips: num});
 	}
 
 	holdDice() {
