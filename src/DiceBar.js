@@ -18,7 +18,7 @@ class DiceBar extends Component {
 		if (this.state.roll === 3) {
 			this.setState({ 
 				reroll: true,
-				roll: 0,
+				roll: 1,
 			})
 		} else {
 			this.setState({ reroll: false });

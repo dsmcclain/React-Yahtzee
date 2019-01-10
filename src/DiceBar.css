@@ -7,8 +7,16 @@ body {
 	align-items: center;
 }
 .roll-button {
+	background-color: #FFFE90;
+	border: none;
+	border-radius: 50%;
+	box-shadow: -4px 4px 2px #555;
 	margin: 2em;
 	width: 75px;
+	height: 75px;
+}
+.reroll {
+	background-color: #F00;
 }
 .dice-bar {
 	display: flex;
