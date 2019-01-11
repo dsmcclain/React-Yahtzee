@@ -14,6 +14,7 @@ body {
 	margin: 2em;
 	width: 75px;
 	height: 75px;
+	cursor: pointer;
 }
 .reroll {
 	background-color: #F00;
@@ -37,15 +38,5 @@ body {
 .dice-bar > .hold {
 	border: 10px solid #F00;
 }
-
-/* STYLES TO MAKE CHECKBOXES INVISIBLE */
-input[type="checkbox"] {
-	display: none;
-	outline: none;
-}
-.toggle-hold-label {
-	display: inline-block;
-	cursor: pointer;
-	width: 150px;
-	height: auto;
-}
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
