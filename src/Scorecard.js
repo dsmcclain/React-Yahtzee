@@ -4,7 +4,7 @@ import {hot} from "react-hot-loader";
 class SectionRow extends Component {
   render() {
     return(
-      <table>
+      <table className="scorecard">
       <tr>
         <th>
           Upper Section
