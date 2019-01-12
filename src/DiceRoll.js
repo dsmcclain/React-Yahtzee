@@ -11,6 +11,7 @@ class DiceRoll extends Component {
 		}
 		this.toggleHold = this.toggleHold.bind(this);
 		this.rollDice = this.rollDice.bind(this);
+		this.calculateScore = this.calculateScore.bind(this);
 	}
 
 	// if roll button is clicked, check if reroll applies. If so, reset hold state
@@ -44,6 +45,15 @@ class DiceRoll extends Component {
 		this.setState({hold: holds});
 	}
 
+	calculateScore() {
+		var total = 0;
+		this.state.pips.forEach((pips) => {
+			total = total + pips + 1;
+			console.log('total is now ' + total);
+		});
+		return total;
+	}
+
 	render() {
 		return(
 			<div className="dice-bar">
@@ -52,9 +62,21 @@ class DiceRoll extends Component {
 				<Dice id={2} pips={this.state.pips[2]} hold={this.state.hold[2]} toggleHold={this.toggleHold} />
 				<Dice id={3} pips={this.state.pips[3]} hold={this.state.hold[3]} toggleHold={this.toggleHold} />
 				<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
+				<Score pips={this.state.pips}/>
 			</div>
 		)
 	}
+}
+
+const Score = (props) => {
+	var total = 0;
+		props.pips.forEach((pips) => {
+			total = total + pips + 1;
+			console.log('total is now ' + total);
+		});
+		return (
+			<h1>the total is {total}</h1>
+		)
 }
 
 export default hot(module)(DiceRoll);
