@@ -1,22 +1,18 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 
-class SectionRow extends Component {
+class ScoreTable extends Component {
   render() {
     return(
       <table className="scorecard">
-      <tr>
-        <th>
+        <thead>
           Upper Section
-        </th>
-      </tr>
-     	<UpperRows items={this.props.upperItems}/>
-      <tr>
-        <th>
+        </thead>
+     	<SectionRows items={this.props.upperItems}/>
+        <thead>
           Lower Section
-        </th>
-      </tr>
-      	
+        </thead>
+      <SectionRows items={this.props.lowerItems}/>
       </table>
     );
   }
@@ -35,7 +31,7 @@ class ItemRow extends Component {
   }
 }
 
-class UpperRows extends Component {
+class SectionRows extends Component {
   render() {
     const rows = [];
     
@@ -48,10 +44,8 @@ class UpperRows extends Component {
     });
 
     return (
-      <table>
         <tbody>{rows}</tbody>
-      </table>
-    )
+    );
   }
 }
 
@@ -59,7 +53,7 @@ class Scorecard extends Component {
   render() {
     return (
       <div>
-        <SectionRow upperItems={UPPER_ITEMS} lowerItems={LOWER_ITEMS} />
+        <ScoreTable upperItems={UPPER_ITEMS} lowerItems={LOWER_ITEMS} />
       </div>
     );
   }

@@ -21,6 +21,10 @@ class DiceBar extends Component {
 				reroll: true,
 				roll: 1,
 			})
+		} else {
+			this.setState({reroll: false});
+			const rollCount = this.state.roll;
+			this.setState({roll: rollCount + 1});
 		}
 	}
 
@@ -30,11 +34,11 @@ class DiceBar extends Component {
 					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
 					<h1>You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h1>
 				<div className="dice-bar">
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
+					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
+					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
+					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
+					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
+					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
 				</div>
 				<Scorecard />
 			</div>
