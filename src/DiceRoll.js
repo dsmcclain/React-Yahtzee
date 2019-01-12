@@ -10,7 +10,6 @@ class DiceRoll extends Component {
 			hold: [false, false, false, false, false],
 		}
 		this.toggleHold = this.toggleHold.bind(this);
-		this.reroll = this.reroll.bind(this);
 		this.rollDice = this.rollDice.bind(this);
 	}
 
@@ -18,21 +17,17 @@ class DiceRoll extends Component {
 	componentDidUpdate(prevProps) {
 		if (this.props.roll !== prevProps.roll) {
 			if (this.props.reroll) {
-				this.reroll();
+				this.setState({ hold: [false, false, false, false, false] });
+				this.rollDice([false, false, false, false, false]);
 			} else {
-				this.rollDice();
-			}
+				this.rollDice(this.state.hold);
+			  }
 		}
 	}
 
-	reroll() {
-		this.setState({ hold: [false, false, false, false, false] });
-		this.rollDice();
-	}
-
-	rollDice() {
+	rollDice(holds) {
 		let newPips = [...this.state.pips];
-		let holds = [...this.state.hold];
+		console.log("holds is: " + holds);
 		for (let i = 0; i < 5; i++){
 			if (!holds[i]) {
 				const num = Math.floor(Math.random() * 6);
