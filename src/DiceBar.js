@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import Dice from "./Dice.js";
+import DiceRoll from "./DiceRoll.js";
 import RollButton from "./RollButton.js";
 import Scorecard from "./Scorecard.js"
 import "./DiceBar.css";
@@ -34,11 +34,7 @@ class DiceBar extends Component {
 					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
 					<h1>You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h1>
 				<div className="dice-bar">
-					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
-					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
-					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
-					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
-					<Dice roll={this.state.roll} reroll={this.state.reroll}/>
+					<DiceRoll roll={this.state.roll} reroll={this.state.reroll}/>
 				</div>
 				<Scorecard />
 			</div>
