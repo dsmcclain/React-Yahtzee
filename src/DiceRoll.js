@@ -13,12 +13,12 @@ class DiceRoll extends Component {
 		this.rollDice = this.rollDice.bind(this);
 	}
 
-	// if roll button is clicked, check if reroll, else check if dice has hold
+	// if roll button is clicked, check if reroll applies. If so, reset hold state
 	componentDidUpdate(prevProps) {
 		if (this.props.roll !== prevProps.roll) {
 			if (this.props.reroll) {
 				this.setState({ hold: [false, false, false, false, false] });
-				this.rollDice([false, false, false, false, false]);
+				this.rollDice([false, false, false, false, false]); // necessary b/c state update is async
 			} else {
 				this.rollDice(this.state.hold);
 			  }
@@ -37,17 +37,22 @@ class DiceRoll extends Component {
 		this.setState({pips: newPips});
 	}
 
+	// triggered from Dice.js
 	toggleHold(id) {
 		let holds = this.state.hold;
 		holds[id] = !holds[id];
 		this.setState({hold: holds});
-		console.log(holds);
-		console.log(this.state.hold);
 	}
 
 	render() {
 		return(
-			<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleHold={this.toggleHold} />
+			<div className="dice-bar">
+				<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleHold={this.toggleHold} />
+				<Dice id={1} pips={this.state.pips[1]} hold={this.state.hold[1]} toggleHold={this.toggleHold} />
+				<Dice id={2} pips={this.state.pips[2]} hold={this.state.hold[2]} toggleHold={this.toggleHold} />
+				<Dice id={3} pips={this.state.pips[3]} hold={this.state.hold[3]} toggleHold={this.toggleHold} />
+				<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
+			</div>
 		)
 	}
 }
