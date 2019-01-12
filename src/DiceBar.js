@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import Dice from "./Dice.js";
-import RollButton from "./RollButton.js"
+import DiceRoll from "./DiceRoll.js";
+import RollButton from "./RollButton.js";
+import Scorecard from "./Scorecard.js"
 import "./DiceBar.css";
 
 class DiceBar extends Component {
@@ -21,7 +22,7 @@ class DiceBar extends Component {
 				roll: 1,
 			})
 		} else {
-			this.setState({ reroll: false });
+			this.setState({reroll: false});
 			const rollCount = this.state.roll;
 			this.setState({roll: rollCount + 1});
 		}
@@ -32,13 +33,8 @@ class DiceBar extends Component {
 			<div className="dice-area">
 					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
 					<h1>You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h1>
-				<div className="dice-bar">
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-					<Dice roll={this.state.roll} reroll={this.state.reroll} />
-				</div>
+					<DiceRoll roll={this.state.roll} reroll={this.state.reroll}/>
+					<Scorecard />
 			</div>
 		);
 	}
