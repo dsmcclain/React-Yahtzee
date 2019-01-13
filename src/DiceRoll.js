@@ -46,13 +46,17 @@ class DiceRoll extends Component {
 
 	render() {
 		return(
-			<div className="dice-bar">
-				<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleHold={this.toggleHold} />
-				<Dice id={1} pips={this.state.pips[1]} hold={this.state.hold[1]} toggleHold={this.toggleHold} />
-				<Dice id={2} pips={this.state.pips[2]} hold={this.state.hold[2]} toggleHold={this.toggleHold} />
-				<Dice id={3} pips={this.state.pips[3]} hold={this.state.hold[3]} toggleHold={this.toggleHold} />
-				<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
-				<Score pips={this.state.pips}/>
+			<div className="dice-area">
+				<div className="dice-bar">
+					<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleHold={this.toggleHold} />
+					<Dice id={1} pips={this.state.pips[1]} hold={this.state.hold[1]} toggleHold={this.toggleHold} />
+					<Dice id={2} pips={this.state.pips[2]} hold={this.state.hold[2]} toggleHold={this.toggleHold} />
+					<Dice id={3} pips={this.state.pips[3]} hold={this.state.hold[3]} toggleHold={this.toggleHold} />
+					<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
+				</div>	
+				<div>
+					<Score pips={this.state.pips} roll={this.props.roll}/>
+				</div>
 			</div>
 		)
 	}
@@ -62,10 +66,9 @@ const Score = (props) => {
 	var total = 0;
 		props.pips.forEach((pips) => {
 			total = total + pips + 1;
-			console.log('total is now ' + total);
 		});
 		return (
-			<h1>the total is {total}</h1>
+			<h1 className="score-count">Your {props.roll === 3 ? 'final' : ''} total is {total}</h1>
 		)
 }
 
