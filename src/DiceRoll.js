@@ -27,7 +27,6 @@ class DiceRoll extends Component {
 
 	rollDice(holds) {
 		let newPips = [...this.state.pips];
-		console.log("holds is: " + holds);
 		for (let i = 0; i < 5; i++){
 			if (!holds[i]) {
 				const num = Math.floor(Math.random() * 6);
