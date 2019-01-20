@@ -30,12 +30,20 @@ class DiceBar extends Component {
 	render () {
 		return (
 			<div className="app-container">
-					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
+					<RollButton roll={this.state.roll} onRollClick={() => store.dispatch({ type: 'ROLL_DICE'})}/>
 					<h2 className="roll-count">You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h2>
 					<DiceRoll roll={this.state.roll} reroll={this.state.reroll}/>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	roll: DiceBar
+})
+
+const mapDispatchToProps = dispatch => ({
+	onRollClick: () => dispatch(rollDice());
+})
 
 export default hot (module)(DiceBar);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {hot} from "react-hot-loader";
+import PropTypes from 'prop-types';
 import Dice from "./Dice.js";
 import"./DiceBar.css";
 
@@ -9,13 +9,18 @@ class RollButton extends Component {
 	}
 
 	render () {
+		const { roll, onRollClick } = this.props
 		return (
 				<button id="roll-btn"
-						className={`roll-button${this.props.roll === 3? ' reroll' : ''}`}
-						onClick={this.props.handleClick}>
-						{this.props.roll === 3? 'Reroll!' : 'Roll!'}</button>
+						className={`roll-button${roll === 3? ' reroll' : ''}`}
+						onClick={onRollClick}>
+						{roll === 3? 'Reroll!' : 'Roll!'}</button>
 		)
 	}
 }
 
-export default hot (module)(RollButton);
+RollButton.propTypes = {
+	onRollClick: PropTypes.func.isRequired,
+}
+
+export default RollButton;

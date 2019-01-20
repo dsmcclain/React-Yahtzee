@@ -17,8 +17,9 @@ class DiceRoll extends Component {
 	componentDidUpdate(prevProps) {
 		if (this.props.roll !== prevProps.roll) {
 			if (this.props.reroll) {
-				this.setState({ hold: [false, false, false, false, false] });
-				this.rollDice([false, false, false, false, false]); // necessary b/c state update is async
+				const clearHolds = [false, false, false, false, false];
+				this.setState({ hold: clearHolds });
+				this.rollDice(clearHolds); 
 			} else {
 				this.rollDice(this.state.hold);
 			  }
