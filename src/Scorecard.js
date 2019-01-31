@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import { isNull } from "util";
+import "./Scorecard.css";
 
 class ScoreTable extends Component {
   render() {
