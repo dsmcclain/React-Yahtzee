@@ -5,13 +5,15 @@ class ScoreTable extends Component {
   render() {
     return(
       <table className="scorecard">
-        <thead>
+        <th colspan="2">
           Upper Section
-        </thead>
+        </th>
+        <th>Score</th>
      	<SectionRows items={this.props.upperItems}/>
-        <thead>
+        <th colspan="2">
           Lower Section
-        </thead>
+        </th>
+        <th>Score</th>
       <SectionRows items={this.props.lowerItems}/>
       </table>
     );
@@ -25,6 +27,7 @@ class ItemRow extends Component {
     return (
     <tr>
       <td>{item.name}</td>
+      <td>{item.description}</td>
       <td>{item.score}</td>
     </tr>
     );
@@ -44,7 +47,7 @@ class SectionRows extends Component {
     });
 
     return (
-        <tbody>{rows}</tbody>
+        rows
     );
   }
 }
@@ -60,14 +63,14 @@ class Scorecard extends Component {
 }
 
 const UPPER_ITEMS = [
-  {name: 'Aces', score: 3},
-  {name: 'Twos', score: 6},
-  {name: 'Threeeeeeees', score: 9}
+  {name: 'Aces', description: 'Total of all Aces', score: 3},
+  {name: 'Twos', description: 'Total of all Twos', score: 6},
+  {name: 'Threes', description: 'Total of all Threes', score: 9}
 ];
 
 const LOWER_ITEMS = [
-  {name: 'Full House', score: 25, fulfilled: false},
-  {name: 'YAHTZEE', score: 50, fulfilled: false},
+  {name: 'Full House', description: 'Two of a Kind + Three of a Kind', score: 25, fulfilled: false},
+  {name: 'YAHTZEE', description: 'All Five Dice the Same', score: 50, fulfilled: false},
 ];
 
 
