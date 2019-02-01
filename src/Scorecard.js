@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import { isNull, isNullOrUndefined } from "util";
+import Cell from './Cell.js';
 import "./Scorecard.css";
 
 class ScoreTable extends Component {
   render() {
     return(
       <table className="scorecard">
-        <th colspan="2">
+        <th>
           Upper Section
         </th>
         <th>Score</th>
+        <Cell />
      	<SectionRows items={this.props.upperItems}/>
         <th colspan="2">
           Lower Section
