@@ -4,6 +4,16 @@ import { isNull, isNullOrUndefined } from "util";
 import Cell from './Cell.js';
 import "./Scorecard.css";
 
+const Score = (props) => {
+	var total = 0;
+		props.pips.forEach((pips) => {
+			total = total + pips + 1;
+		});
+		return (
+			<h1 className="score-count">Your {props.roll === 3 ? 'final' : ''} total is {total}</h1>
+		)
+}
+
 class ScoreTable extends Component {
   render() {
     return(
@@ -12,7 +22,7 @@ class ScoreTable extends Component {
           Upper Section
         </th>
         <th>Score</th>
-        <Cell eligible={true} suggestion={25}/>
+        <Cell eligible={true} suggestion={this.props.total}/>
      	<SectionRows items={this.props.upperItems}/>
         <th colSpan="2">
           Lower Section
@@ -58,9 +68,15 @@ class SectionRows extends Component {
 
 class Scorecard extends Component {
   render() {
+    var total = 0;
+		this.props.pips.forEach((pips) => {
+			total = total + pips + 1;
+    });
+    
     return (
       <div>
-        <ScoreTable upperItems={UPPER_ITEMS} lowerItems={LOWER_ITEMS} />
+        <ScoreTable total={total} upperItems={UPPER_ITEMS} lowerItems={LOWER_ITEMS} />
+        <Score pips={this.props.pips} roll={this.props.roll}/>
       </div>
     );
   }

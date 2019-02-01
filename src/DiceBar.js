@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import DiceRoll from "./DiceRoll.js";
 import RollButton from "./RollButton.js";
-import Scorecard from "./Scorecard.js";
+
 import "./DiceBar.css";
 
 class DiceBar extends Component {
@@ -34,7 +34,7 @@ class DiceBar extends Component {
 					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
 					<h2 className="roll-count">You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h2>
 					<DiceRoll roll={this.state.roll} reroll={this.state.reroll}/>
-					<Scorecard />
+					
 			</div>
 		);
 	}

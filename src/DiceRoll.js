@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {hot} from "react-hot-loader";
 import Dice from "./Dice.js";
+import Scorecard from "./Scorecard.js";
 
 class DiceRoll extends Component {
 	constructor(props) {
@@ -54,21 +55,11 @@ class DiceRoll extends Component {
 					<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
 				</div>	
 				<div>
-					<Score pips={this.state.pips} roll={this.props.roll}/>
+					<Scorecard pips={this.state.pips} roll={this.props.roll}/>
 				</div>
 			</div>
 		)
 	}
-}
-
-const Score = (props) => {
-	var total = 0;
-		props.pips.forEach((pips) => {
-			total = total + pips + 1;
-		});
-		return (
-			<h1 className="score-count">Your {props.roll === 3 ? 'final' : ''} total is {total}</h1>
-		)
 }
 
 export default hot(module)(DiceRoll);
