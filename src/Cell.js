@@ -6,9 +6,7 @@ class Cell extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eligible: true,
       filled: false,
-      suggestion: 10,
       score: 5,
     }
 
@@ -19,8 +17,8 @@ class Cell extends Component {
 
     if (this.state.filled) {
       cell = this.state.score
-    } else if (this.state.eligible) {
-      cell = this.state.suggestion
+    } else if (this.props.eligible) {
+      cell = this.props.suggestion
     } else {
       cell = isNullOrUndefined
     }

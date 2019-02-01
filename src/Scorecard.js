@@ -12,7 +12,7 @@ class ScoreTable extends Component {
           Upper Section
         </th>
         <th>Score</th>
-        <Cell />
+        <Cell eligible={true} suggestion={25}/>
      	<SectionRows items={this.props.upperItems}/>
         <th colSpan="2">
           Lower Section
