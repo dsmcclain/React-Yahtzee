@@ -14,10 +14,10 @@ class Cell extends Component {
   }
 
   handleClick() {
-    this.setState({
+    {!this.state.filled && this.setState({
       score: (this.props.suggestion),
       filled: true
-    })
+    })}
   }
 
   render () {
