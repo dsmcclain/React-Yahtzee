@@ -14,7 +14,7 @@ class ScoreTable extends Component {
         <th>Score</th>
         <Cell />
      	<SectionRows items={this.props.upperItems}/>
-        <th colspan="2">
+        <th colSpan="2">
           Lower Section
         </th>
         <th>Score</th>

@@ -6,17 +6,26 @@ class Cell extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eligible: false,
+      eligible: true,
       filled: false,
-      suggestion: isNullOrUndefined,
-      score: isNullOrUndefined,
+      suggestion: 10,
+      score: 5,
     }
 
   }
 
   render () {
+    let cell;
+
+    if (this.state.filled) {
+      cell = this.state.score
+    } else if (this.state.eligible) {
+      cell = this.state.suggestion
+    } else {
+      cell = isNullOrUndefined
+    }
     return (
-      <td>{this.state.suggestion}</td>
+      <td>{cell}</td>
     )
   }
 }
