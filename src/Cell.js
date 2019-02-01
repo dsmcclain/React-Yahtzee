@@ -1,15 +1,23 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import { isNullOrUndefined } from "util";
+import "./Cell.css";
 
 class Cell extends Component {
   constructor(props) {
     super(props);
     this.state = {
       filled: false,
-      score: 5,
+      score: 10,
     }
+    this.handleClick = this.handleClick.bind(this);
+  }
 
+  handleClick() {
+    this.setState({
+      score: (this.props.suggestion),
+      filled: true
+    })
   }
 
   render () {
@@ -23,7 +31,9 @@ class Cell extends Component {
       cell = isNullOrUndefined
     }
     return (
-      <td>{cell}</td>
+      <td className={`cell ${this.state.filled ? "filled" : 
+            (this.props.eligible ? "eligible" : "empty")}`} 
+          onClick={this.handleClick}>{cell}</td>
     )
   }
 }

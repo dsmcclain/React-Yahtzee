@@ -1,0 +1,10 @@
+.filled {
+  color: blue;
+}
+.eligible {
+  color: red;
+  border: 1px solid red;
+}
+.empty {
+
+}
