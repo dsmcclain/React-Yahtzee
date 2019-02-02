@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import { isNull, isNullOrUndefined } from "util";
-import Cell from './Cell.js';
+import { isNullOrUndefined } from "util";
+import Calculator from './Calculator.js';
 import "./Scorecard.css";
 
 const Score = (props) => {
@@ -22,7 +22,7 @@ class ScoreTable extends Component {
           Upper Section
         </th>
         <th>Score</th>
-        <Cell eligible={true} suggestion={this.props.total}/>
+        <Calculator pips={this.props.pips} />
      	<SectionRows items={this.props.upperItems}/>
         <th colSpan="2">
           Lower Section
@@ -68,14 +68,11 @@ class SectionRows extends Component {
 
 class Scorecard extends Component {
   render() {
-    var total = 0;
-		this.props.pips.forEach((pips) => {
-			total = total + pips + 1;
-    });
-    
     return (
       <div>
-        <ScoreTable total={total} upperItems={UPPER_ITEMS} lowerItems={LOWER_ITEMS} />
+        <ScoreTable pips={this.props.pips}
+                    upperItems={UPPER_ITEMS}
+                    lowerItems={LOWER_ITEMS} />
         <Score pips={this.props.pips} roll={this.props.roll}/>
       </div>
     );
