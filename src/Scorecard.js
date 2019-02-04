@@ -1,18 +1,30 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import { isNull, isNullOrUndefined } from "util";
+import { isNullOrUndefined } from "util";
+import Calculator from './Calculator.js';
 import "./Scorecard.css";
+
+const Score = (props) => {
+	var total = 0;
+		props.pips.forEach((pips) => {
+			total = total + pips + 1;
+		});
+		return (
+			<h1 className="score-count">Your {props.roll === 3 ? 'final' : ''} total is {total}</h1>
+		)
+}
 
 class ScoreTable extends Component {
   render() {
     return(
       <table className="scorecard">
-        <th colspan="2">
+        <th>
           Upper Section
         </th>
         <th>Score</th>
+        <Calculator pips={this.props.pips} />
      	<SectionRows items={this.props.upperItems}/>
-        <th colspan="2">
+        <th colSpan="2">
           Lower Section
         </th>
         <th>Score</th>
@@ -58,7 +70,10 @@ class Scorecard extends Component {
   render() {
     return (
       <div>
-        <ScoreTable upperItems={UPPER_ITEMS} lowerItems={LOWER_ITEMS} />
+        <ScoreTable pips={this.props.pips}
+                    upperItems={UPPER_ITEMS}
+                    lowerItems={LOWER_ITEMS} />
+        <Score pips={this.props.pips} roll={this.props.roll}/>
       </div>
     );
   }
