@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import { isNullOrUndefined } from "util";
 import Calculator from './Calculator.js';
-import "./Scorecard.css";
+import "../styles/Scorecard.css";
 
 const Score = (props) => {
 	var total = 0;

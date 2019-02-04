@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {hot} from "react-hot-loader";
-import Dice from "./Dice.js";
+import Dice from "../components/Dice.js";
 import Scorecard from "./Scorecard.js";
 
 class DiceRoll extends Component {

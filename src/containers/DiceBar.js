@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import DiceRoll from "./DiceRoll.js";
-import RollButton from "./RollButton.js";
-
-import "./DiceBar.css";
+import RollButton from "../components/RollButton.js";
+import "../styles/DiceBar.css";
 
 class DiceBar extends Component {
 	constructor(props) {

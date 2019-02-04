@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import { isNullOrUndefined } from "util";
-import "./Cell.css";
+import "../styles/Cell.css";
 
 class Cell extends Component {
   constructor(props) {
