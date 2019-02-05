@@ -17,19 +17,23 @@ const Score = (props) => {
 class Scorecard extends Component {
   render() {
     return(
-      <table className="scorecard">
-        <th>
-          Upper Section
-        </th>
-        <th>Score</th>
-        <Calculator pips={this.props.pips} />
-     	<SectionRows items={this.props.upperItems}/>
-        <th colSpan="2">
-          Lower Section
-        </th>
-        <th>Score</th>
-      <SectionRows items={this.props.lowerItems}/>
-      </table>
+      <div className="scorecard-canvas">
+        <table className="upper-scorecard">
+          <th>
+            Upper Section
+          </th>
+          <th>Score</th>
+          {/* <Calculator pips={this.props.pips} /> */}
+            <SectionRows items={this.props.upperItems}/>
+        </table>
+        <table className="lower-scorecard">
+          <th colSpan="2">
+            Lower Section
+          </th>
+          <th>Score</th>
+            <SectionRows items={this.props.lowerItems}/>
+        </table>
+      </div>
     );
   }
 }

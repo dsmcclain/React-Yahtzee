@@ -31,7 +31,8 @@ class DiceBar extends Component {
 		return (
 			<div className="app-container">
 					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
-					<h2 className="roll-count">You have rolled {this.state.roll} {this.state.roll === 1 ? 'time' : 'times'}</h2>
+					<h2 className="roll-count">You have {3 - this.state.roll}
+																		 {this.state.roll === 2 ? ' roll' : ' rolls'} remaining</h2>
 					<DiceRoll roll={this.state.roll} reroll={this.state.reroll}/>
 					
 			</div>
