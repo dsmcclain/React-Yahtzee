@@ -3,7 +3,7 @@ import {hot} from "react-hot-loader";
 import Dice from "../components/Dice.js";
 import ScoreTable from "./ScoreTable.js";
 
-class DiceRoll extends Component {
+class DiceRoller extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -62,4 +62,4 @@ class DiceRoll extends Component {
 	}
 }
 
-export default hot(module)(DiceRoll);
+export default hot(module)(DiceRoller);

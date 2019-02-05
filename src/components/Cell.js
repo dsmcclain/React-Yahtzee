@@ -3,12 +3,14 @@ import {hot} from "react-hot-loader";
 import { isNullOrUndefined } from "util";
 import "../styles/Cell.css";
 
+
+// This presentational component is rendered by ScoreTable.js
 class Cell extends Component {
   constructor(props) {
     super(props);
     this.state = {
       filled: false,
-      score: 10,
+      score: 0,
     }
     this.handleClick = this.handleClick.bind(this);
   }

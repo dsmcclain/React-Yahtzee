@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import DiceRoll from "./DiceRoll.js";
+import DiceRoller from "./DiceRoller.js";
 import RollButton from "../components/RollButton.js";
-import "../styles/DiceBar.css";
+import "../styles/DiceContainer.css";
 
-class DiceBar extends Component {
+class DiceContainer extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -33,11 +33,11 @@ class DiceBar extends Component {
 					<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
 					<h2 className="roll-count">You have {3 - this.state.roll}
 																		 {this.state.roll === 2 ? ' roll' : ' rolls'} remaining</h2>
-					<DiceRoll roll={this.state.roll} reroll={this.state.reroll}/>
+					<DiceRoller roll={this.state.roll} reroll={this.state.reroll}/>
 					
 			</div>
 		);
 	}
 }
 
-export default hot (module)(DiceBar);
+export default hot (module)(DiceContainer);

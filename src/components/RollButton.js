@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import"../styles/DiceBar.css";
+import"../styles/DiceContainer.css";
 
 class RollButton extends Component {
 	constructor(props) {

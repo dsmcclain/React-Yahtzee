@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import { isNullOrUndefined } from "util";
 import Cell from "../components/Cell.js";
-// import Calculator from './Calculator.js';
 import "../styles/ScoreTable.css";
 
 class ScoreTable extends Component {
@@ -14,13 +12,17 @@ class ScoreTable extends Component {
 		}
   }
 
-  // When dice change, call functions to check for values of each type
+  // LOGIC FOR REAL-TIME UPDATING OF SCORES IN TABLE
+
+  // triggered when dice change
 	componentDidUpdate(prevProps) {
 		if (this.props.pips !== prevProps.pips) {
 			this.checkDice(this.props.pips);
 		}
 	}
 
+  // determine what scoring options are available for user and
+  // calculate their values. 
 	checkDice(pips) {
 		let newActive = [...this.state.active];
 		let newTotal = [...this.state.total];
@@ -32,7 +34,10 @@ class ScoreTable extends Component {
 			) : (  
 				newActive[i] = false,
 				newTotal[i] = 0 );
-		}
+    }
+    // call setState with updater function to protect against
+    // bugs resulting from asynchronous updating. For more info
+    // visit https://reactjs.org/docs/react-component.html#setstate
 		this.setState((state) => ({ active: newActive })),
 		this.setState((state) => ({ total: newTotal }));
 	}	
@@ -75,11 +80,12 @@ class Scorecard extends Component {
   }
 }
 
+// METHODS FOR GENERATING TABLE ROWS
+
 class ItemRow extends Component {
   render() {
     const item = this.props.item;
     const index = this.props.index;
-    console.log(this.props.active[index])
 
     return (
     <tr>
@@ -123,29 +129,29 @@ const Score = (props) => {
 }
 
 const UPPER_ITEMS = [
-  {name: 'Aces', description: 'Total of all Aces', score: isNullOrUndefined},
-  {name: 'Twos', description: 'Total of all Twos', score: isNullOrUndefined},
-  {name: 'Threes', description: 'Total of all Threes', score: isNullOrUndefined},
-  {name: 'Fours', description: 'Total of all Threes', score: isNullOrUndefined},
-  {name: 'Fives', description: 'Total of all Threes', score: isNullOrUndefined},
-  {name: 'Sixes', description: 'Total of all Threes', score: isNullOrUndefined},
-  {name: 'Subtotal', description: 'Total of all Scores', score: isNullOrUndefined},
-  {name: 'Bonus (If Subtotal > 63)', description: 'Score 35', score: 35, fulfilled: false},
-  {name: 'Total', description: 'Subtotal + Bonus', score: isNullOrUndefined},
+  {name: 'Aces', description: 'Total of all Aces'},
+  {name: 'Twos', description: 'Total of all Twos'},
+  {name: 'Threes', description: 'Total of all Threes'},
+  {name: 'Fours', description: 'Total of all Threes'},
+  {name: 'Fives', description: 'Total of all Threes'},
+  {name: 'Sixes', description: 'Total of all Threes'},
+  {name: 'Subtotal', description: 'Total of all Scores'},
+  {name: 'Bonus (If Subtotal > 63)', description: 'Score 35'},
+  {name: 'Total', description: 'Subtotal + Bonus'},
 ];
 
 const LOWER_ITEMS = [
-  {name: 'Three of a Kind', description: 'Total of All Dice', score: isNullOrUndefined},
-  {name: 'Four of a Kind)', description: 'Total of All Dice', score: isNullOrUndefined},
-  {name: 'Full House', description: 'Score 25', score: 25, fulfilled: false},
-  {name: 'Small Straight (Sequence of 4)', description: 'Score 30', score: 50, fulfilled: false},
-  {name: 'Large Straight (Sequence of 5)', description: 'Score 40', score: 50, fulfilled: false},
-  {name: 'YAHTZEE', description: 'Score 50', score: 50, fulfilled: false},
-  {name: 'Chance', description: 'Total of All Dice', score: isNullOrUndefined},
-  {name: 'YAHTZEE Bonus (Additional YAHTZEEs)', description: 'Score 100', score: 100, fulfilled: false},
-  {name: 'Upper Total', description: ' ⇒ ', score: isNullOrUndefined},
-  {name: 'Lower Total', description: ' ⇒ ', score: isNullOrUndefined},
-  {name: 'Grand Total', description: 'Upper Total + Lower Total', score: isNullOrUndefined},
+  {name: 'Three of a Kind', description: 'Total of All Dice'},
+  {name: 'Four of a Kind)', description: 'Total of All Dice'},
+  {name: 'Full House', description: 'Score 25'},
+  {name: 'Small Straight (Sequence of 4)', description: 'Score 30'},
+  {name: 'Large Straight (Sequence of 5)', description: 'Score 40'},
+  {name: 'YAHTZEE', description: 'Score 50'},
+  {name: 'Chance', description: 'Total of All Dice'},
+  {name: 'YAHTZEE Bonus (Additional YAHTZEEs)', description: 'Score 100'},
+  {name: 'Upper Total', description: ' ⇒ '},
+  {name: 'Lower Total', description: ' ⇒ '},
+  {name: 'Grand Total', description: 'Upper Total + Lower Total'},
 ];
 
 
