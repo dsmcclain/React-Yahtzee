@@ -1,4 +1,4 @@
-<em>Welcome to React Yahtzee! </em>
+<strong>Welcome to React Yahtzee! </strong>
 
 Current Release: v0.1.0
 
