@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import { isNullOrUndefined } from "util";
 import Calculator from './Calculator.js';
-import "./Scorecard.css";
+import "../styles/ScoreTable.css";
 
 const Score = (props) => {
 	var total = 0;
@@ -14,7 +14,7 @@ const Score = (props) => {
 		)
 }
 
-class ScoreTable extends Component {
+class Scorecard extends Component {
   render() {
     return(
       <table className="scorecard">
@@ -66,11 +66,11 @@ class SectionRows extends Component {
   }
 }
 
-class Scorecard extends Component {
+class ScoreTable extends Component {
   render() {
     return (
       <div>
-        <ScoreTable pips={this.props.pips}
+        <Scorecard pips={this.props.pips}
                     upperItems={UPPER_ITEMS}
                     lowerItems={LOWER_ITEMS} />
         <Score pips={this.props.pips} roll={this.props.roll}/>
@@ -106,4 +106,4 @@ const LOWER_ITEMS = [
 ];
 
 
-export default hot (module)(Scorecard);
+export default hot (module)(ScoreTable);

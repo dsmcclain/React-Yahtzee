@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {hot} from "react-hot-loader";
-import Cell from "./Cell.js";
+import Cell from "../components/Cell.js";
 
 class Calculator extends Component {
 	constructor(props) {

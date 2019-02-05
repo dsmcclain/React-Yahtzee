@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import "./app.css";
-import DiceBar from './DiceBar.js';
+import "./styles/app.css";
+import DiceBar from './containers/DiceBar.js';
 
 class App extends Component {
 	render() {
