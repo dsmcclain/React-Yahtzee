@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {hot} from "react-hot-loader";
 import Dice from "../components/Dice.js";
-import ScoreTable from "./ScoreTable.js";
+import TableContainer from "./TableContainer.js";
 
 class DiceRoller extends Component {
 	constructor(props) {
@@ -57,7 +57,7 @@ class DiceRoller extends Component {
 					<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
 				</div>	
 				<div>
-					<ScoreTable pips={this.state.pips} roll={this.props.roll}/>
+					<TableContainer pips={this.state.pips} roll={this.props.roll}/>
 				</div>
 			</div>
 		)
