@@ -2,7 +2,7 @@
 
 Current Release: v0.1.0
 
-This game is still in development.  Version 0.1.0 is stable and has some of the game's basic functionality, but it is not possible to play a full game.  If you would like to run 0.1.0 locally, you will need node package manager (npm). 
+This game is still in development.  Version 0.1.0 has some of the game's basic functionality, but it is not possible to play a full game.  If you would like to run 0.1.0 locally, you will need node package manager (npm). 
 
 To run the game locally, fork and clone the repository.  Navigate to the directory containing the project and run
 ```

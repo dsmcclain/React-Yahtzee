@@ -16,7 +16,7 @@ class Cell extends Component {
   }
 
   handleClick() {
-    {!this.state.filled && this.setState({
+    {(!this.state.filled && this.props.eligible) && this.setState ({
       score: (this.props.suggestion),
       filled: true
     })}
