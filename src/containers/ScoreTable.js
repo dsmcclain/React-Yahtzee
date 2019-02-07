@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import Cell from "../components/Cell.js";
+import UpperSums from "../components/UpperSums.js";
 import "../styles/ScoreTable.css";
 
 class ScoreTable extends Component {
@@ -25,14 +26,11 @@ class ScoreTable extends Component {
     })
   }
 
-
   render() {
     return(
       <div className="scorecard-canvas">
         <table className="upper-scorecard">
-          <th colSpan="2">
-            Upper Section
-          </th>
+          <th colSpan="2">Upper Section</th>
           <th>Score</th>
             <TableGenerator items={this.props.upperItems}
                          active={this.props.active}
@@ -40,13 +38,13 @@ class ScoreTable extends Component {
                          filled={this.state.filled}
                          score={this.state.score}
                          toggleCell={this.toggleCell} />
+            <UpperSums score={this.state.score}
+                      filled={this.state.filled} />
         </table>
         {/* <table className="lower-scorecard">
-          <th colSpan="2">
-            Lower Section
-          </th>
+          <th colSpan="2">Lower Section</th>
           <th>Score</th>
-            <SectionRows items={this.props.lowerItems}/>
+            <TableGenerator items={this.props.lowerItems}/>
         </table> */}
       </div>
     );

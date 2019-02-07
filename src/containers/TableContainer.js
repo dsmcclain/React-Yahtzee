@@ -74,9 +74,6 @@ const UPPER_ITEMS = [
   {name: 'Fours', description: 'Total of all Threes'},
   {name: 'Fives', description: 'Total of all Threes'},
   {name: 'Sixes', description: 'Total of all Threes'},
-  {name: 'Subtotal', description: 'Total of all Scores'},
-  {name: 'Bonus (If Subtotal > 63)', description: 'Score 35'},
-  {name: 'Total', description: 'Subtotal + Bonus'},
 ];
 
 const LOWER_ITEMS = [
