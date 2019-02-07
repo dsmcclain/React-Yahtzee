@@ -14,12 +14,14 @@ class DiceRoller extends Component {
 		this.rollDice = this.rollDice.bind(this);
 	}
 
-	// if roll button is clicked, check if reroll applies. If so, reset hold state
+	// if roll button is clicked and reroll applies
+	// reset 'hold' state for all dice, 
+	// otherwise roll every dice with hold:false
 	componentDidUpdate(prevProps) {
 		if (this.props.roll !== prevProps.roll) {
 			if (this.props.reroll) {
 				this.setState({ hold: [false, false, false, false, false] });
-				this.rollDice([false, false, false, false, false]); // necessary b/c state update is async
+				this.rollDice([false, false, false, false, false]);
 			} else {
 				this.rollDice(this.state.hold);
 			  }
@@ -37,7 +39,7 @@ class DiceRoller extends Component {
 		this.setState({pips: newPips});
 	}
 
-	// triggered from Dice.js
+	// triggered when dice are clicked (callback from Dice.js)
 	toggleHold(id) {
 		let holds = this.state.hold;
 		holds[id] = !holds[id];

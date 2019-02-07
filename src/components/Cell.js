@@ -3,8 +3,8 @@ import {hot} from "react-hot-loader";
 import { isNullOrUndefined } from "util";
 import "../styles/Cell.css";
 
+//This presentational component is rendered by ScoreTable.js
 
-// This presentational component is rendered by ScoreTable.js
 class Cell extends Component {
   constructor(props) {
     super(props);

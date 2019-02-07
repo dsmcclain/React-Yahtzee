@@ -22,7 +22,7 @@ class ScoreTable extends Component {
 	}
 
   // determine what scoring options are available for user and
-  // calculate their values. 
+  // calculate their values
 	checkDice(pips) {
 		let newActive = [...this.state.active];
 		let newTotal = [...this.state.total];
@@ -36,8 +36,7 @@ class ScoreTable extends Component {
 				newTotal[i] = 0 );
     }
     // call setState with updater function to protect against
-    // bugs resulting from asynchronous updating. For more info
-    // visit https://reactjs.org/docs/react-component.html#setstate
+    // bugs resulting from asynchronous updating
 		this.setState((state) => ({ active: newActive })),
 		this.setState((state) => ({ total: newTotal }));
 	}	
@@ -118,13 +117,17 @@ class SectionRows extends Component {
   }
 }
 
+//PRESENTATIONAL COMPONENT FOR DISPLAYING TOTAL OF ALL DICE
+
 const Score = (props) => {
 	var total = 0;
 		props.pips.forEach((pips) => {
 			total = total + pips + 1;
 		});
 		return (
-			<h1 className="score-count">Your {props.roll === 3 ? 'final' : ''} total is {total}</h1>
+			<h1 className="score-count">
+        Your {props.roll === 3 ? 'final' : ''} total is {total}
+      </h1>
 		)
 }
 
