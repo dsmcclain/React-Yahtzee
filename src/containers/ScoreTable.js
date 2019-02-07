@@ -34,7 +34,7 @@ class ScoreTable extends Component {
             Upper Section
           </th>
           <th>Score</th>
-            <SectionRows items={this.props.upperItems}
+            <TableGenerator items={this.props.upperItems}
                          active={this.props.active}
                          total={this.props.total}
                          filled={this.state.filled}
@@ -53,49 +53,26 @@ class ScoreTable extends Component {
   }
 }
 
-// METHODS FOR GENERATING TABLE ROWS
-
-class ItemRow extends Component {
-  render() {
-    const item = this.props.item;
-    const index = this.props.index;
-
-    return (
+const TableGenerator = (props) =>  {
+  const rows = [];
+  props.items.forEach((item, index) => {
+    rows.push(
     <tr>
       <td>{item.name}</td>
       <td>{item.description}</td>
       <Cell id={index}
-            active={this.props.active[index]} 
-            suggestion={this.props.total[index]}
-            filled={this.props.filled[index]}
-            score={this.props.score[index]} 
-            toggleCell={this.props.toggleCell}/>
+            active={props.active[index]} 
+            suggestion={props.total[index]}
+            filled={props.filled[index]}
+            score={props.score[index]} 
+            toggleCell={props.toggleCell}/>
     </tr>
-    );
-  }
-}
+    )
+  })
 
-class SectionRows extends Component {
-  render() {
-    const rows = [];
-    
-    this.props.items.forEach((item, index) => {
-      rows.push(
-        <ItemRow
-          item={item}
-          index={index} 
-          active={this.props.active}
-          total={this.props.total}
-          filled={this.props.filled}
-          score={this.props.score}
-          toggleCell={this.props.toggleCell}/>
-      );
-    });
-
-    return (
-        rows
-    );
-  }
+  return (
+    rows
+  )
 }
 
 export default hot (module)(ScoreTable)

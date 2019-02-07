@@ -13,13 +13,10 @@ class Cell extends Component{
 
   cellClick() {
     this.props.toggleCell(this.props.id);
-    console.log('calling scoretable');
   }
 
   render() {
-
     let cell;
-
     if (this.props.filled) {
       cell = this.props.score
     } else if (this.props.active) {
