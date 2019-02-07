@@ -5,37 +5,33 @@ import "../styles/Cell.css";
 
 //This presentational component is rendered by ScoreTable.js
 
-class Cell extends Component {
+class Cell extends Component{
   constructor(props) {
     super(props);
-    this.state = {
-      filled: false,
-      score: 0,
-    }
-    this.handleClick = this.handleClick.bind(this);
+    this.cellClick = this.cellClick.bind(this);
   }
 
-  handleClick() {
-    {(!this.state.filled && this.props.eligible) && this.setState ({
-      score: (this.props.suggestion),
-      filled: true
-    })}
+  cellClick() {
+    this.props.toggleCell(this.props.id);
+    console.log('calling scoretable');
   }
 
-  render () {
+  render() {
+
     let cell;
 
-    if (this.state.filled) {
-      cell = this.state.score
-    } else if (this.props.eligible) {
+    if (this.props.filled) {
+      cell = this.props.score
+    } else if (this.props.active) {
       cell = this.props.suggestion
     } else {
       cell = isNullOrUndefined
     }
+
     return (
-      <td className={`cell ${this.state.filled ? "filled" : 
-            (this.props.eligible ? "eligible" : "empty")}`} 
-          onClick={this.handleClick}>{cell}</td>
+      <td className={`cell ${this.props.filled ? "filled" : 
+            (this.props.active ? "active" : "empty")}`} 
+          onClick={this.cellClick}>{cell}</td>
     )
   }
 }

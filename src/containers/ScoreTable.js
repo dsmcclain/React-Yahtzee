@@ -8,7 +8,21 @@ class ScoreTable extends Component {
     super(props);
     this.state = {
       filled: [false, false, false, false, false, false],
+      score: [0,0,0,0,0,0],
     }
+    this.toggleCell = this.toggleCell.bind(this);
+  }
+
+  toggleCell(id) {
+    let fills = this.state.filled;
+    let scores = this.state.score;
+    {(!this.state.filled[id] && this.props.active[id]) && 
+      ( fills[id] = true, 
+        scores[id] = this.props.total[id])}
+    this.setState ({
+      filled: fills,
+      score: scores
+    })
   }
 
 
@@ -22,7 +36,10 @@ class ScoreTable extends Component {
           <th>Score</th>
             <SectionRows items={this.props.upperItems}
                          active={this.props.active}
-                         total={this.props.total} />
+                         total={this.props.total}
+                         filled={this.state.filled}
+                         score={this.state.score}
+                         toggleCell={this.toggleCell} />
         </table>
         {/* <table className="lower-scorecard">
           <th colSpan="2">
@@ -47,8 +64,12 @@ class ItemRow extends Component {
     <tr>
       <td>{item.name}</td>
       <td>{item.description}</td>
-      <Cell eligible={this.props.active[index]} 
-            suggestion={this.props.total[index]} />
+      <Cell id={index}
+            active={this.props.active[index]} 
+            suggestion={this.props.total[index]}
+            filled={this.props.filled[index]}
+            score={this.props.score[index]} 
+            toggleCell={this.props.toggleCell}/>
     </tr>
     );
   }
@@ -64,7 +85,10 @@ class SectionRows extends Component {
           item={item}
           index={index} 
           active={this.props.active}
-          total={this.props.total}/>
+          total={this.props.total}
+          filled={this.props.filled}
+          score={this.props.score}
+          toggleCell={this.props.toggleCell}/>
       );
     });
 
