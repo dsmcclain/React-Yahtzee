@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import Cell from "../components/Cell.js";
 import UpperSums from "../components/UpperSums.js";
-import LowerTableGenerator from "../components/LowerTableGenerator.js"
+import LowerTableGenerator from "./LowerTableGenerator.js"
 import "../styles/ScoreTable.css";
 
 class ScoreTable extends Component {
@@ -46,7 +46,8 @@ class ScoreTable extends Component {
           <th colSpan="2">Lower Section</th>
           <th>Score</th>
           <LowerTableGenerator items={this.props.lowerItems}
-                               pips={this.props.pips} />
+                               pips={this.props.pips} 
+                               roll={this.props.roll}/>
         </table>
       </div>
     );

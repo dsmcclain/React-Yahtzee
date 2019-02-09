@@ -44,37 +44,23 @@ class TableContainer extends Component {
     return (
       <div>
         <ScoreTable upperItems={UPPER_ITEMS}
-                   lowerItems={LOWER_ITEMS}
-                   active={this.state.active}
-                   total={this.state.total} 
-                   pips={this.props.pips}/>
-        <Score pips={this.props.pips} roll={this.props.roll}/>
+                    lowerItems={LOWER_ITEMS}
+                    active={this.state.active}
+                    total={this.state.total} 
+                    pips={this.props.pips}
+                    roll={this.props.roll}/>
       </div>
     );
   }
-}
-
-//PRESENTATIONAL COMPONENT FOR DISPLAYING TOTAL OF ALL DICE
-
-const Score = (props) => {
-	var total = 0;
-		props.pips.forEach((pips) => {
-			total = total + pips + 1;
-		});
-		return (
-			<h1 className="score-count">
-        Your {props.roll === 3 ? 'final' : ''} total is {total}
-      </h1>
-		)
 }
 
 const UPPER_ITEMS = [
   {name: 'Aces', description: 'Total of all Aces'},
   {name: 'Twos', description: 'Total of all Twos'},
   {name: 'Threes', description: 'Total of all Threes'},
-  {name: 'Fours', description: 'Total of all Threes'},
-  {name: 'Fives', description: 'Total of all Threes'},
-  {name: 'Sixes', description: 'Total of all Threes'},
+  {name: 'Fours', description: 'Total of all Fours'},
+  {name: 'Fives', description: 'Total of all Fives'},
+  {name: 'Sixes', description: 'Total of all Sixes'},
 ];
 
 const LOWER_ITEMS = [

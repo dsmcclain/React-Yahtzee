@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import Cell from "./Cell.js";
+import Cell from "../components/Cell.js";
 
 class LowerTableGenerator extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: [false, false, false, false, false, false],
-      total: [0,0,25,30,40,50],
-      filled: [false, false, false, false, false, false],
-      score: [0,0,0,0,0,0],
+      active: [false, false, false, false, false, false, false],
+      total: [0,0,25,30,40,50,0],
+      filled: [false, false, false, false, false, false, false],
+      score: [0,0,0,0,0,0,0],
     }
     this.toggleCell = this.toggleCell.bind(this);
   }
@@ -68,16 +68,11 @@ class LowerTableGenerator extends Component {
     newActive[3] = fourConsecutive
     newActive[4] = fiveConsecutive
     newActive[5] = yahtzee
+    newActive[6] = (this.props.roll === 3)
 
     newActive[0] && (newTotal[0] = diceSum)
     newActive[1] && (newTotal[1] = diceSum)
-
-    // triples && (newActive[0] = true, newTotal[0] = diceSum)
-    // quadruples && (newActive[1] = true, newTotal[1] = diceSum)
-    // (triples && pairs) && (newActive[2] = true)
-    // fourConsecutive && (newActive[3] = true)
-    // fiveConsecutive && (newActive[4] = true)
-    // yahtzee && (newActive[5] = true)
+    newActive[6] && (newTotal[6] = diceSum)
 
     this.setState((state) => ({ active: newActive }))
 		this.setState((state) => ({ total: newTotal }))
