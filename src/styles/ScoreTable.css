@@ -8,6 +8,7 @@ td {
   max-width: 150px;
 }
 .scorecard-canvas {
+	display: flex;
 	padding: 4px;
 	background: #FFFE90;
 	border-radius: 10px;

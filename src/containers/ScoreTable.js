@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import Cell from "../components/Cell.js";
 import UpperSums from "../components/UpperSums.js";
+import LowerTableGenerator from "../components/LowerTableGenerator.js"
 import "../styles/ScoreTable.css";
 
 class ScoreTable extends Component {
@@ -32,7 +33,7 @@ class ScoreTable extends Component {
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
           <th>Score</th>
-            <TableGenerator items={this.props.upperItems}
+            <UpperTableGenerator items={this.props.upperItems}
                          active={this.props.active}
                          total={this.props.total}
                          filled={this.state.filled}
@@ -41,17 +42,18 @@ class ScoreTable extends Component {
             <UpperSums score={this.state.score}
                       filled={this.state.filled} />
         </table>
-        {/* <table className="lower-scorecard">
+        <table className="lower-scorecard">
           <th colSpan="2">Lower Section</th>
           <th>Score</th>
-            <TableGenerator items={this.props.lowerItems}/>
-        </table> */}
+          <LowerTableGenerator items={this.props.lowerItems}
+                               pips={this.props.pips} />
+        </table>
       </div>
     );
   }
 }
 
-const TableGenerator = (props) =>  {
+const UpperTableGenerator = (props) =>  {
   const rows = [];
   props.items.forEach((item, index) => {
     rows.push(

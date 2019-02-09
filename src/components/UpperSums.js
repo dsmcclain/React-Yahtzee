@@ -9,28 +9,28 @@ const UpperSums = (props) => {
   }
 
   let subtotal = props.score.reduce(getSum);
-  let complete = props.filled.includes(false);
+  let complete = !props.filled.includes(false);
   let bonus = subtotal >= 63 ? 35 : 0;
   return (
     <>
       <tr>
         <td>Subtotal</td>
         <td>Total of All Scores</td>
-        <td className={complete ? " gray" : " filled" }>
+        <td className={complete ? " filled" : " gray" }>
           {subtotal}
         </td>
       </tr>
       <tr>
         <td>Bonus</td>
         <td>(If Subtotal > 63)</td>
-        <td className={complete ? " empty" : " filled"}>
+        <td className={complete ? " filled" : " empty"}>
           {bonus} 
         </td>
       </tr>
       <tr>
         <td>Total</td>
         <td>Subtotal + Bonus</td>
-        <td className={complete? " empty" : " filled"}>
+        <td className={complete? " filled" : " empty"}>
           {subtotal + bonus}</td>
       </tr>
     </>

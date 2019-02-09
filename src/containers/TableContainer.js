@@ -46,7 +46,8 @@ class TableContainer extends Component {
         <ScoreTable upperItems={UPPER_ITEMS}
                    lowerItems={LOWER_ITEMS}
                    active={this.state.active}
-                   total={this.state.total} />
+                   total={this.state.total} 
+                   pips={this.props.pips}/>
         <Score pips={this.props.pips} roll={this.props.roll}/>
       </div>
     );
@@ -77,17 +78,17 @@ const UPPER_ITEMS = [
 ];
 
 const LOWER_ITEMS = [
-  {name: 'Three of a Kind', description: 'Total of All Dice'},
-  {name: 'Four of a Kind)', description: 'Total of All Dice'},
+  {name: 'Three of a Kind', description: 'Total of all Dice'},
+  {name: 'Four of a Kind', description: 'Total of all Dice'},
   {name: 'Full House', description: 'Score 25'},
-  {name: 'Small Straight (Sequence of 4)', description: 'Score 30'},
-  {name: 'Large Straight (Sequence of 5)', description: 'Score 40'},
+  {name: 'Small Straight', description: 'Score 30'},
+  {name: 'Large Straight', description: 'Score 40'},
   {name: 'YAHTZEE', description: 'Score 50'},
   {name: 'Chance', description: 'Total of All Dice'},
-  {name: 'YAHTZEE Bonus (Additional YAHTZEEs)', description: 'Score 100'},
+  {name: 'Bonus YAHTZEES', description: 'Score 100 each'},
   {name: 'Upper Total', description: ' ⇒ '},
   {name: 'Lower Total', description: ' ⇒ '},
-  {name: 'Grand Total', description: 'Upper Total + Lower Total'},
+  {name: 'Grand Total', description: ' ⇒ '},
 ];
 
 
