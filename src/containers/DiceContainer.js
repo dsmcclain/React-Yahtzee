@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import RollButton from "../components/RollButton.js";
+import RollCount from "../components/RollCount.js"
 import Dice from "../components/Dice.js";
 import TableContainer from "./TableContainer.js";
 import "../styles/DiceContainer.css";
@@ -53,10 +54,7 @@ class DiceContainer extends Component {
 		return (
 			<div className="app-container">
 				<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
-				<h2 className="roll-count">
-					You have {3 - this.state.roll}
-					{this.state.roll === 2 ? ' roll' : ' rolls'} remaining
-				</h2>
+				<RollCount roll={this.state.roll} />
 				<div className="dice-area">
 					<div className="dice-bar">
 						<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleHold={this.toggleHold} />

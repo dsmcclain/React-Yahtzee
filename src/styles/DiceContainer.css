@@ -10,7 +10,13 @@ body {
 	background-color: #FFFE90;	
 	border-radius: 5px;
 	box-shadow: -6px 6px 2px #888;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding: 15px;
+}
+.roll-count h2 {
+	margin: 2px
 }
 .dice-area {
 	display: flex;
