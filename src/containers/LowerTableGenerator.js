@@ -5,14 +5,14 @@ import Cell from "../components/Cell.js";
 
 class LowerTableGenerator extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       active: [false, false, false, false, false, false, false],
       total: [0,0,0,0,0,0,0],
       filled: [false, false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0],
     }
-    this.toggleCell = this.toggleCell.bind(this);
+    this.toggleCell = this.toggleCell.bind(this)
   }
 
   toggleCell(id) {
@@ -30,7 +30,7 @@ class LowerTableGenerator extends Component {
   // triggered when dice change
   componentDidUpdate(prevProps) {
     if (this.props.pips !== prevProps.pips) {
-      this.checkDice(this.props.pips);
+      this.checkDice(this.props.pips)
     }
   }
 
@@ -48,24 +48,31 @@ class LowerTableGenerator extends Component {
       diceSum = diceSum + dice + 1 
     })
 
-    let pairs = Object.values(diceObject).includes(2);
-    let triples = Object.values(diceObject).includes(3);
-    let quadruples = Object.values(diceObject).includes(4);
-    let yahtzee = Object.values(diceObject).includes(5);
+    let pair = Object.values(diceObject).includes(2)
+    let triple = Object.values(diceObject).includes(3)
+    let quadruple = Object.values(diceObject).includes(4)
+    let yahtzee = Object.values(diceObject).includes(5)
 
-    let faces = Object.keys(diceObject);
+    let faces = Object.keys(diceObject)
 
     let fiveConsecutive = 
-      (faces.length === 5 && faces[4] - faces[0] === 4);
+      (faces.length === 5 && faces[4] - faces[0] === 4)
 
     let fourConsecutive =
       ((faces.length === 5 && 
-        (faces[4] - faces[1] === 3 || faces[3] - faces[0] === 3))
-      || (faces.length === 4 && faces[3] - faces[0] ===3))
-
-    newActive[0] = triples || quadruples || yahtzee
-    newActive[1] = quadruples || yahtzee
-    newActive[2] = triples && pairs
+        (faces[4] - faces[1] === 3 || faces[3] - faces[0] === 3)) ||
+        (faces.length === 4 && faces[3] - faces[0] === 3))
+    /*
+    triple && (newActive[0] = true)
+    quadruple && (newActive[0] = true, newActive[1] = true)
+    yahtzee && (newActive[0] = true, newActive[1] = true, newActive[5] = true)
+    (triple && pair) && (newActive[2] = true )
+    fourConsecutive && (newActive[3] = true)
+    fiveConsecutive && (newActive[4] = true)
+    */
+    newActive[0] = triple || quadruple || yahtzee
+    newActive[1] = quadruple || yahtzee
+    newActive[2] = triple && pair
     newActive[3] = fourConsecutive
     newActive[4] = fiveConsecutive
     newActive[5] = yahtzee
@@ -84,7 +91,7 @@ class LowerTableGenerator extends Component {
   }
 
   render() {
-    const lowerRows = [];
+    const lowerRows = []
     this.props.items.forEach((item, index) => {
       lowerRows.push(
       <tr>

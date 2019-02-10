@@ -36,8 +36,8 @@ class TableContainer extends Component {
     }
     // call setState with updater function to protect against
     // bugs resulting from asynchronous updating
-		this.setState((state) => ({ active: newActive })),
-		this.setState((state) => ({ total: newTotal }));
+		this.setState((state) => ({ active: newActive }))
+		this.setState((state) => ({ total: newTotal }))
 	}	
 
   render() {
