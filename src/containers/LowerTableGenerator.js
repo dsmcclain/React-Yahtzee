@@ -71,13 +71,13 @@ class LowerTableGenerator extends Component {
     newActive[5] = yahtzee
     newActive[6] = (this.props.roll === 3)
 
-    newActive[0] && (newTotal[0] = diceSum)
-    newActive[1] && (newTotal[1] = diceSum)
-    newActive[2] && (newTotal[2] = 25)
-    newActive[3] && (newTotal[3] = 30)
-    newActive[4] && (newTotal[4] = 40)
-    newActive[5] && (newTotal[5] = 50)
-    newActive[6] && (newTotal[6] = diceSum)
+    newActive[0] ? (newTotal[0] = diceSum) : (newTotal[0] = 0)
+    newActive[1] ? (newTotal[0] = diceSum) : (newTotal[1] = 0)
+    newActive[2] ? (newTotal[2] = 25) : (newTotal[2] = 0)
+    newActive[3] ? (newTotal[3] = 30) : (newTotal[3] = 0)
+    newActive[4] ? (newTotal[4] = 40) : (newTotal[4] = 0)
+    newActive[5] ? (newTotal[5] = 50) : (newTotal[5] = 0)
+    newActive[6] ? (newTotal[6] = diceSum) : (newTotal[6] = 0)
 
     this.setState((state) => ({ active: newActive }))
 		this.setState((state) => ({ total: newTotal }))
