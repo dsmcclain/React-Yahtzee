@@ -72,9 +72,6 @@ const LOWER_ITEMS = [
   {name: 'YAHTZEE', description: 'Score 50'},
   {name: 'Chance', description: 'Total of All Dice'},
   {name: 'Bonus YAHTZEES', description: 'Score 100 each'},
-  {name: 'Upper Total', description: ' ⇒ '},
-  {name: 'Lower Total', description: ' ⇒ '},
-  {name: 'Grand Total', description: ' ⇒ '},
 ];
 
 

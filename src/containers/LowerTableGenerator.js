@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
+import LowerSums from "../components/LowerSums.js";
 import Cell from "../components/Cell.js";
 
 class LowerTableGenerator extends Component {
@@ -7,7 +8,7 @@ class LowerTableGenerator extends Component {
     super(props);
     this.state = {
       active: [false, false, false, false, false, false, false],
-      total: [0,0,25,30,40,50,0],
+      total: [0,0,0,0,0,0,0],
       filled: [false, false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0],
     }
@@ -17,9 +18,9 @@ class LowerTableGenerator extends Component {
   toggleCell(id) {
     let fills = this.state.filled;
     let scores = this.state.score;
-    {(!this.state.filled[id] && this.state.active[id]) && 
-      ( fills[id] = true, 
-        scores[id] = this.state.total[id])}
+    !this.state.filled[id] && 
+      (fills[id] = true, 
+        scores[id] = this.state.total[id])
     this.setState ({
       filled: fills,
       score: scores
@@ -72,6 +73,10 @@ class LowerTableGenerator extends Component {
 
     newActive[0] && (newTotal[0] = diceSum)
     newActive[1] && (newTotal[1] = diceSum)
+    newActive[2] && (newTotal[2] = 25)
+    newActive[3] && (newTotal[3] = 30)
+    newActive[4] && (newTotal[4] = 40)
+    newActive[5] && (newTotal[5] = 50)
     newActive[6] && (newTotal[6] = diceSum)
 
     this.setState((state) => ({ active: newActive }))
@@ -96,7 +101,13 @@ class LowerTableGenerator extends Component {
     })
 
     return (
-      lowerRows
+      <>
+      {lowerRows}
+      <LowerSums filled={this.state.filled}
+                 score={this.state.score}
+                 upperFills={this.props.upperFills}
+                 upperScores={this.props.upperScores} />
+      </>
     )
   }
 }

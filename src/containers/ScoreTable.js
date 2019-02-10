@@ -18,9 +18,9 @@ class ScoreTable extends Component {
   toggleCell(id) {
     let fills = this.state.filled;
     let scores = this.state.score;
-    {(!this.state.filled[id] && this.props.active[id]) && 
-      ( fills[id] = true, 
-        scores[id] = this.props.total[id])}
+    !this.state.filled[id] && 
+      (fills[id] = true, 
+        scores[id] = this.props.total[id])
     this.setState ({
       filled: fills,
       score: scores
@@ -47,7 +47,9 @@ class ScoreTable extends Component {
           <th>Score</th>
           <LowerTableGenerator items={this.props.lowerItems}
                                pips={this.props.pips} 
-                               roll={this.props.roll}/>
+                               roll={this.props.roll}
+                               upperFills={this.state.filled}
+                               upperScores={this.state.score}/>
         </table>
       </div>
     );
