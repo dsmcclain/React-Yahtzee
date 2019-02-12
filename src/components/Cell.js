@@ -1,9 +1,6 @@
-import React, { Component } from "react";
-import {hot} from "react-hot-loader";
-import { isNullOrUndefined } from "util";
-import "../styles/Cell.css";
-
-//This presentational component is rendered by ScoreTable.js
+import React, { Component } from "react"
+import {hot} from "react-hot-loader"
+import "../styles/Cell.css"
 
 class Cell extends Component{
   constructor(props) {

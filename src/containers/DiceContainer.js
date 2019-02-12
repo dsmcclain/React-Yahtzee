@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import {hot} from "react-hot-loader";
-import RollButton from "../components/RollButton.js";
+import React, { Component } from "react"
+import {hot} from "react-hot-loader"
+import RollButton from "../components/RollButton.js"
 import RollCount from "../components/RollCount.js"
-import Dice from "../components/Dice.js";
-import TableContainer from "./TableContainer.js";
-import "../styles/DiceContainer.css";
+import Dice from "../components/Dice.js"
+import TableContainer from "./TableContainer.js"
+import "../styles/DiceContainer.css"
 
 class DiceContainer extends Component {
 	constructor(props) {
@@ -21,9 +21,9 @@ class DiceContainer extends Component {
 
 	// triggered when dice are clicked (callback from Dice.js)
 	toggleHold(id) {
-		let holds = this.state.hold;
-		holds[id] = !holds[id];
-		this.setState({hold: holds});
+		let holds = this.state.hold
+		holds[id] = !holds[id]
+		this.setState({hold: holds})
 	}
 
 	// triggered when roll button is clicked (callback from RollButton.js)
@@ -33,7 +33,7 @@ class DiceContainer extends Component {
 			this.setState((state) => ({ hold: [false, false, false, false, false] }))
 			this.rollDice([false, false, false, false, false])
 		} else {
-			const rollCount = this.state.roll;
+			const rollCount = this.state.roll
 			this.setState((state) => ({roll: rollCount + 1}))
 			this.rollDice(this.state.hold)
 		}
@@ -43,11 +43,11 @@ class DiceContainer extends Component {
 		let newPips = [...this.state.pips];
 		for (let i = 0; i < 5; i++){
 			if (!holds[i]) {
-				const num = Math.floor(Math.random() * 6);
-				newPips[i] = num;
+				const num = Math.floor(Math.random() * 6)
+				newPips[i] = num
 			}
 		}
-		this.setState({pips: newPips});
+		this.setState({pips: newPips})
 	}
 
 	render () {
@@ -66,9 +66,9 @@ class DiceContainer extends Component {
 					<div>
 						<TableContainer pips={this.state.pips} roll={this.state.roll}/>
 					</div>
+				</div>
 			</div>
-			</div>
-		);
+		)
 	}
 }
 

@@ -8,17 +8,17 @@ const LowerSums = (props) => {
   }
 
   let lowerSum = props.score.reduce(getSum)
-  let upperSum = props.upperScores.reduce(getSum)
-  let upperComplete = !props.upperFills.includes(false)
+  // let upperSum = props.upperScores.reduce(getSum)
+  // let upperComplete = !props.upperFills.includes(false)
   let lowerComplete = !props.filled.includes(false) 
   return (
     <>
       <tr>
         <td>Upper Total</td>
         <td> ⇒ </td>
-        <td className={upperComplete ? " filled" : " empty" }>
+        {/* <td className={upperComplete ? " filled" : " empty" }>
           {upperSum}
-        </td>
+        </td> */}
       </tr>
       <tr>
         <td>Lower Total</td>
@@ -30,8 +30,8 @@ const LowerSums = (props) => {
       <tr>
         <td>Grand Total</td>
         <td> ⇒ </td>
-        <td className={(upperComplete && lowerComplete) ? " filled" : " empty"}>
-          {upperSum + lowerSum}</td>
+        {/* <td className={(upperComplete && lowerComplete) ? " filled" : " empty"}>
+          {upperSum + lowerSum}</td> */}
       </tr>
     </>
   )
