@@ -90,7 +90,7 @@ class TableContainer extends Component {
     newActive[9] ? (newPotential[9] = 30) : (newPotential[9] = 0)
     newActive[10] ? (newPotential[10] = 40) : (newPotential[10] = 0)
     newActive[11] ? (newPotential[11] = 50) : (newPotential[11] = 0)
-    newActive[12] ? (newPotential[12] = diceSum) : (newPotential[12] = 0)
+    newPotential[12] = diceSum
 
     this.setState((state) => ({ active: newActive }))
 		this.setState((state) => ({ potential: newPotential }))
