@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import {hot} from "react-hot-loader"
 import Rows from "../components/Rows.js"
+import UpperSums from "../components/UpperSums.js"
+import LowerSums from "../components/LowerSums.js"
 import "../styles/ScoreTable.css"
 
 class TableContainer extends Component {
@@ -110,13 +112,23 @@ class TableContainer extends Component {
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
           <th>Score</th>
-            <Rows items={ITEMS}
+            <Rows items={UPPER_ITEMS}
                   active={this.state.active}
                   potential={this.state.potential}
                   filled={this.state.filled}
                   score={this.state.score}
                   toggleCell={this.toggleCell} />
-            {/* <UpperSums score={this.state.score} filled={this.state.filled}/>
+            <UpperSums score={this.state.score} filled={this.state.filled}/>
+        </table>
+        <table className="upper-scorecard">
+          <th colSpan="2">Upper Section</th>
+          <th>Score</th>
+            <Rows items={LOWER_ITEMS}
+                  active={this.state.active}
+                  potential={this.state.potential}
+                  filled={this.state.filled}
+                  score={this.state.score}
+                  toggleCell={this.toggleCell} />
             <LowerSums score={this.state.score} filled={this.state.filled}/> */}
         </table>
       </div>
@@ -124,21 +136,24 @@ class TableContainer extends Component {
   }
 }
 
-const ITEMS = [
-  {name: 'Aces', description: 'Total of all Aces'},
-  {name: 'Twos', description: 'Total of all Twos'},
-  {name: 'Threes', description: 'Total of all Threes'},
-  {name: 'Fours', description: 'Total of all Fours'},
-  {name: 'Fives', description: 'Total of all Fives'},
-  {name: 'Sixes', description: 'Total of all Sixes'},
-  {name: 'Three of a Kind', description: 'Total of all Dice'},
-  {name: 'Four of a Kind', description: 'Total of all Dice'},
-  {name: 'Full House', description: 'Score 25'},
-  {name: 'Small Straight', description: 'Score 30'},
-  {name: 'Large Straight', description: 'Score 40'},
-  {name: 'YAHTZEE', description: 'Score 50'},
-  {name: 'Chance', description: 'Total of All Dice'},
-  {name: 'Bonus YAHTZEES', description: 'Score 100 each'},
+const UPPER_ITEMS = [
+  {name: 'Aces', description: 'Total of all Aces', index: 0},
+  {name: 'Twos', description: 'Total of all Twos', index: 1},
+  {name: 'Threes', description: 'Total of all Threes', index: 2},
+  {name: 'Fours', description: 'Total of all Fours', index: 3},
+  {name: 'Fives', description: 'Total of all Fives', index: 4},
+  {name: 'Sixes', description: 'Total of all Sixes', index: 5},
+]
+
+const LOWER_ITEMS = [
+  {name: 'Three of a Kind', description: 'Total of all Dice', index: 6},
+  {name: 'Four of a Kind', description: 'Total of all Dice', index: 7},
+  {name: 'Full House', description: 'Score 25', index: 8},
+  {name: 'Small Straight', description: 'Score 30', index: 9},
+  {name: 'Large Straight', description: 'Score 40', index: 10},
+  {name: 'YAHTZEE', description: 'Score 50', index: 11},
+  {name: 'Chance', description: 'Total of All Dice', index: 12},
+  {name: 'Bonus YAHTZEES', description: 'Score 100 each', index: 13},
 ]
 
 export default hot (module)(TableContainer);
