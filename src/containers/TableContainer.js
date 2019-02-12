@@ -20,16 +20,16 @@ class TableContainer extends Component {
   }
 
   toggleCell(id) {
-    let fills = this.state.filled;
+    let fills = this.state.filled
     let scores = this.state.score;
-    !this.state.filled[id] && 
+    (!this.state.filled[id] && this.props.rollClicked) && 
       (fills[id] = true, 
         scores[id] = this.state.potential[id])
     this.setState ({
       filled: fills,
-      score: scores
+      score: scores,
     })
-    //call to props function turnHandler via diceContainer
+    this.props.tableClick()
   }
 
   // triggered when dice change
@@ -44,17 +44,6 @@ class TableContainer extends Component {
 		let newActive = [...this.state.active];
     let newPotential = [...this.state.potential];
     
-    //SCORING OPTIONS FOR UPPER SECTION
-		for (let i = 0; i <= 5; i++) {
-			let count = pips.filter(x => x===i).length;
-			pips.includes(i) ? (
-				newActive[i] = true,
-				newPotential[i] = count*(i+1)
-			) : (  
-				newActive[i] = false,
-				newPotential[i] = 0 )
-    }
-
     //Extract dice information from pips
     let diceObject = {}
     let diceSum = 0
@@ -74,6 +63,17 @@ class TableContainer extends Component {
       ((faces.length === 5 && 
         (faces[4] - faces[1] === 3 || faces[3] - faces[0] === 3)) ||
         (faces.length === 4 && faces[3] - faces[0] === 3))
+    
+    //SCORING OPTIONS FOR UPPER SECTION
+		for (let i = 0; i <= 5; i++) {
+			let count = pips.filter(x => x===i).length;
+			pips.includes(i) ? (
+				newActive[i] = true,
+				newPotential[i] = count*(i+1)
+			) : (  
+				newActive[i] = false,
+				newPotential[i] = 0 )
+    }
   
     //SCORING OPTIONS FOR LOWER SECTION
     newActive[6] = triple || quadruple || yahtzee

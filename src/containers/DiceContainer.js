@@ -13,10 +13,13 @@ class DiceContainer extends Component {
 			roll: 0,
 			pips: [0,0,0,0,0],
 			hold: [false, false, false, false, false],
+			rollClicked: true,
+			tableClicked: false,
 		}
 		this.handleClick = this.handleClick.bind(this)
 		this.rollDice = this.rollDice.bind(this)
 		this.toggleHold = this.toggleHold.bind(this)
+		this.tableClick = this.tableClick.bind(this)
 	}
 
 	// triggered when dice are clicked (callback from Dice.js)
@@ -26,13 +29,21 @@ class DiceContainer extends Component {
 		this.setState({hold: holds})
 	}
 
+	tableClick() {
+		this.setState({tableClicked: true, rollClicked: false})
+		console.log(this.state.tableClicked)
+		console.log(this.state.rollClicked)
+	}
+
 	// triggered when roll button is clicked (callback from RollButton.js)
 	handleClick() {
-		if (this.state.roll === 3) {
+		if (this.state.roll === 3 && this.state.tableClicked) {
 			this.setState((state) => ({ roll: 1 }))
 			this.setState((state) => ({ hold: [false, false, false, false, false] }))
+			this.setState((state) => ({ rollClicked: true }))
+			this.setState((state) => ({ tableClicked: false }))
 			this.rollDice([false, false, false, false, false])
-		} else {
+		} else if (this.state.roll != 3) {
 			const rollCount = this.state.roll
 			this.setState((state) => ({roll: rollCount + 1}))
 			this.rollDice(this.state.hold)
@@ -53,7 +64,7 @@ class DiceContainer extends Component {
 	render () {
 		return (
 			<div className="app-container">
-				<RollButton roll={this.state.roll} handleClick={this.handleClick}/>
+				<RollButton roll={this.state.roll} handleClick={this.handleClick} tableClosed={this.state.tableClick}/>
 				<RollCount roll={this.state.roll} />
 				<div className="dice-area">
 					<div className="dice-bar">
@@ -64,7 +75,10 @@ class DiceContainer extends Component {
 						<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
 					</div>	
 					<div>
-						<TableContainer pips={this.state.pips} roll={this.state.roll}/>
+						<TableContainer pips={this.state.pips} 
+														roll={this.state.roll} 
+														tableClick={this.tableClick}
+														rollClicked={this.state.rollClicked} />
 					</div>
 				</div>
 			</div>
