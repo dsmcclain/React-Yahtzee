@@ -8,7 +8,8 @@ const LowerSums = (props) => {
   }
 
   let lowerSum = props.score.slice(6).reduce(getSum)
-  let upperSum = props.score.slice(0, 6).reduce(getSum)
+  let upperSubtotal = props.score.slice(0, 6).reduce(getSum)
+  let upperSum = upperSubtotal >= 63 ? upperSubtotal + 35 : upperSubtotal
   let upperComplete = !props.filled.slice(0, 6).includes(false)
   let lowerComplete = !props.filled.slice(6).includes(false) 
   return (

@@ -39,11 +39,12 @@ class TableContainer extends Component {
 		}
 	}
 
-  // determine what scoring options are available for user and
-  // calculate their values
+  // Logic for real-time updating of scoring options on scoretable
 	checkDice(pips) {
 		let newActive = [...this.state.active];
-		let newPotential = [...this.state.potential];
+    let newPotential = [...this.state.potential];
+    
+    //SCORING OPTIONS FOR UPPER SECTION
 		for (let i = 0; i <= 5; i++) {
 			let count = pips.filter(x => x===i).length;
 			pips.includes(i) ? (
@@ -54,38 +55,27 @@ class TableContainer extends Component {
 				newPotential[i] = 0 )
     }
 
+    //Extract dice information from pips
     let diceObject = {}
     let diceSum = 0
-    // Extract pips array into an object where keys represent 
-    // dice faces and values represent the number of times 
-    // each face is showing. Keys are sorted in ascending order.
     pips.forEach(dice => {
       diceObject[dice] = (diceObject[dice] || 0)+1
       diceSum = diceSum + dice + 1 
     })
-
     let pair = Object.values(diceObject).includes(2)
     let triple = Object.values(diceObject).includes(3)
     let quadruple = Object.values(diceObject).includes(4)
     let yahtzee = Object.values(diceObject).includes(5)
 
     let faces = Object.keys(diceObject)
-
     let fiveConsecutive = 
       (faces.length === 5 && faces[4] - faces[0] === 4)
-
     let fourConsecutive =
       ((faces.length === 5 && 
         (faces[4] - faces[1] === 3 || faces[3] - faces[0] === 3)) ||
         (faces.length === 4 && faces[3] - faces[0] === 3))
-    /*
-    triple && (newActive[0] = true)
-    quadruple && (newActive[0] = true, newActive[1] = true)
-    yahtzee && (newActive[0] = true, newActive[1] = true, newActive[5] = true)
-    (triple && pair) && (newActive[2] = true )
-    fourConsecutive && (newActive[3] = true)
-    fiveConsecutive && (newActive[4] = true)
-    */
+  
+    //SCORING OPTIONS FOR LOWER SECTION
     newActive[6] = triple || quadruple || yahtzee
     newActive[7] = quadruple || yahtzee
     newActive[8] = triple && pair
@@ -129,7 +119,7 @@ class TableContainer extends Component {
                   filled={this.state.filled}
                   score={this.state.score}
                   toggleCell={this.toggleCell} />
-            <LowerSums score={this.state.score} filled={this.state.filled}/> */}
+            <LowerSums score={this.state.score} filled={this.state.filled}/>
         </table>
       </div>
     )
