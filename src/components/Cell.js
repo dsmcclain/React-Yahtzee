@@ -1,9 +1,6 @@
-import React, { Component } from "react";
-import {hot} from "react-hot-loader";
-import { isNullOrUndefined } from "util";
-import "../styles/Cell.css";
-
-//This presentational component is rendered by ScoreTable.js
+import React, { Component } from "react"
+import {hot} from "react-hot-loader"
+import "../styles/Cell.css"
 
 class Cell extends Component{
   constructor(props) {
@@ -18,7 +15,7 @@ class Cell extends Component{
   render() {
     let cell;
     this.props.filled ? (cell = this.props.score) 
-    : (cell = this.props.suggestion)
+    : (cell = this.props.potential)
     
     return (
       <td className={`cell ${this.props.filled ? "filled" : 

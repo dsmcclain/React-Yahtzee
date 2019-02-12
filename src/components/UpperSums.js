@@ -8,8 +8,8 @@ const UpperSums = (props) => {
     return total + num;
   }
 
-  let subtotal = props.score.reduce(getSum);
-  let complete = !props.filled.includes(false);
+  let subtotal = props.score.slice(0, 6).reduce(getSum)
+  let complete = !props.filled.slice(0, 6).includes(false)
   let bonus = subtotal >= 63 ? 35 : 0;
   return (
     <>
