@@ -11,7 +11,7 @@ const Rows = (props) => {
         <td>{item.description}</td>
         <Cell id={index}
               active={props.active[index]} 
-              suggestion={props.total[index]}
+              potential={props.potential[index]}
               filled={props.filled[index]}
               score={props.score[index]} 
               toggleCell={props.toggleCell}/>

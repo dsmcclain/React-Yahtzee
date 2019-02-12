@@ -1,55 +1,59 @@
 import React, { Component } from "react"
 import {hot} from "react-hot-loader"
-import TableSections from "./TableSections.js"
+import Rows from "../components/Rows.js"
 import "../styles/ScoreTable.css"
 
 class TableContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-			upperActive: [false, false, false, false, false, false],
-      upperTotal: [0,0,0,0,0,0],
-      lowerActive: [false, false, false, false, false, false, false],
-      lowerTotal: [0,0,0,0,0,0,0],
-		}
+      active: [false, false, false, false, false, false, false,
+               false, false, false, false, false, false],
+      potential: [0,0,0,0,0,0,0,0,0,0,0,0,0],
+      filled: [false, false, false, false, false, false, false,
+               false, false, false, false, false, false],
+      score: [0,0,0,0,0,0,0,0,0,0,0,0,0],
+    }
+    this.toggleCell = this.toggleCell.bind(this)
   }
 
-  // LOGIC FOR REAL-TIME UPDATING OF SCORES IN TABLE
+  toggleCell(id) {
+    let fills = this.state.filled;
+    let scores = this.state.score;
+    !this.state.filled[id] && 
+      (fills[id] = true, 
+        scores[id] = this.state.potential[id])
+    this.setState ({
+      filled: fills,
+      score: scores
+    })
+    //call to props function turnHandler via diceContainer
+  }
 
   // triggered when dice change
 	componentDidUpdate(prevProps) {
 		if (this.props.pips !== prevProps.pips) {
-      this.checkUpper(this.props.pips)
-      this.checkLower(this.props.pips)
+      this.checkDice(this.props.pips)
 		}
 	}
 
   // determine what scoring options are available for user and
   // calculate their values
-	checkUpper(pips) {
-		let newActive = [...this.state.upperActive];
-		let newTotal = [...this.state.upperTotal];
+	checkDice(pips) {
+		let newActive = [...this.state.active];
+		let newPotential = [...this.state.potential];
 		for (let i = 0; i <= 5; i++) {
 			let count = pips.filter(x => x===i).length;
 			pips.includes(i) ? (
 				newActive[i] = true,
-				newTotal[i] = count*(i+1)
+				newPotential[i] = count*(i+1)
 			) : (  
 				newActive[i] = false,
-				newTotal[i] = 0 )
+				newPotential[i] = 0 )
     }
-    // call setState with updater function to protect against
-    // bugs resulting from asynchronous updating
-		this.setState((state) => ({ upperActive: newActive }))
-		this.setState((state) => ({ upperTotal: newTotal }))
-  }	
-  
-  checkLower(pips) {
-    let newActive = [...this.state.lowerActive]
-    let newTotal = [...this.state.lowerTotal]
+
     let diceObject = {}
     let diceSum = 0
-
     // Extract pips array into an object where keys represent 
     // dice faces and values represent the number of times 
     // each face is showing. Keys are sorted in ascending order.
@@ -80,24 +84,24 @@ class TableContainer extends Component {
     fourConsecutive && (newActive[3] = true)
     fiveConsecutive && (newActive[4] = true)
     */
-    newActive[0] = triple || quadruple || yahtzee
-    newActive[1] = quadruple || yahtzee
-    newActive[2] = triple && pair
-    newActive[3] = fourConsecutive
-    newActive[4] = fiveConsecutive
-    newActive[5] = yahtzee
-    newActive[6] = (this.props.roll === 3)
+    newActive[6] = triple || quadruple || yahtzee
+    newActive[7] = quadruple || yahtzee
+    newActive[8] = triple && pair
+    newActive[9] = fourConsecutive
+    newActive[10] = fiveConsecutive
+    newActive[11] = yahtzee
+    newActive[12] = (this.props.roll === 3)
 
-    newActive[0] ? (newTotal[0] = diceSum) : (newTotal[0] = 0)
-    newActive[1] ? (newTotal[0] = diceSum) : (newTotal[1] = 0)
-    newActive[2] ? (newTotal[2] = 25) : (newTotal[2] = 0)
-    newActive[3] ? (newTotal[3] = 30) : (newTotal[3] = 0)
-    newActive[4] ? (newTotal[4] = 40) : (newTotal[4] = 0)
-    newActive[5] ? (newTotal[5] = 50) : (newTotal[5] = 0)
-    newActive[6] ? (newTotal[6] = diceSum) : (newTotal[6] = 0)
+    newActive[6] ? (newPotential[6] = diceSum) : (newPotential[6] = 0)
+    newActive[7] ? (newPotential[7] = diceSum) : (newPotential[7] = 0)
+    newActive[8] ? (newPotential[8] = 25) : (newPotential[8] = 0)
+    newActive[9] ? (newPotential[9] = 30) : (newPotential[9] = 0)
+    newActive[10] ? (newPotential[10] = 40) : (newPotential[10] = 0)
+    newActive[11] ? (newPotential[11] = 50) : (newPotential[11] = 0)
+    newActive[12] ? (newPotential[12] = diceSum) : (newPotential[12] = 0)
 
-    this.setState((state) => ({ lowerActive: newActive }))
-		this.setState((state) => ({ lowerTotal: newTotal }))
+    this.setState((state) => ({ active: newActive }))
+		this.setState((state) => ({ potential: newPotential }))
   }
 
   render() {
@@ -106,38 +110,27 @@ class TableContainer extends Component {
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
           <th>Score</th>
-            <TableSections name={'upper'}
-                            items={UPPER_ITEMS}
-                            active={this.state.upperActive}
-                            total={this.state.upperTotal}
-                            pips={this.props.pips}
-                            roll={this.props.roll} /> 
-        </table>
-        <table className="lower-scorecard">
-          <th colSpan="2">Lower Section</th>
-          <th>Score</th>
-            <TableSections name={'lower'}
-                            items={LOWER_ITEMS}
-                            active={this.state.lowerActive}
-                            total={this.state.lowerTotal}
-                            pips={this.props.pips}
-                            roll={this.props.roll} />
+            <Rows items={ITEMS}
+                  active={this.state.active}
+                  potential={this.state.potential}
+                  filled={this.state.filled}
+                  score={this.state.score}
+                  toggleCell={this.toggleCell} />
+            {/* <UpperSums score={this.state.score} filled={this.state.filled}/>
+            <LowerSums score={this.state.score} filled={this.state.filled}/> */}
         </table>
       </div>
     )
   }
 }
 
-const UPPER_ITEMS = [
+const ITEMS = [
   {name: 'Aces', description: 'Total of all Aces'},
   {name: 'Twos', description: 'Total of all Twos'},
   {name: 'Threes', description: 'Total of all Threes'},
   {name: 'Fours', description: 'Total of all Fours'},
   {name: 'Fives', description: 'Total of all Fives'},
   {name: 'Sixes', description: 'Total of all Sixes'},
-]
-
-const LOWER_ITEMS = [
   {name: 'Three of a Kind', description: 'Total of all Dice'},
   {name: 'Four of a Kind', description: 'Total of all Dice'},
   {name: 'Full House', description: 'Score 25'},

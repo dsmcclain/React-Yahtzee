@@ -15,7 +15,7 @@ class Cell extends Component{
   render() {
     let cell;
     this.props.filled ? (cell = this.props.score) 
-    : (cell = this.props.suggestion)
+    : (cell = this.props.potential)
     
     return (
       <td className={`cell ${this.props.filled ? "filled" : 
