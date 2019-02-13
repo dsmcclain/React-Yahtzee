@@ -3,6 +3,7 @@ import {hot} from "react-hot-loader"
 import Rows from "../components/Rows.js"
 import UpperSums from "../components/UpperSums.js"
 import LowerSums from "../components/LowerSums.js"
+import Bonus from "../components/Bonus.js"
 import "../styles/ScoreTable.css"
 
 class TableContainer extends Component {
@@ -14,14 +15,17 @@ class TableContainer extends Component {
       potential: [0,0,0,0,0,0,0,0,0,0,0,0,0],
       filled: [false, false, false, false, false, false, false,
                false, false, false, false, false, false],
-      score: [0,0,0,0,0,0,0,0,0,0,0,0,0],
+      score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      yahtzees: '',
+
     }
     this.toggleCell = this.toggleCell.bind(this)
   }
 
   toggleCell(id) {
-    let fills = this.state.filled
+    let fills = this.state.filled;
     let scores = this.state.score;
+
     (!this.state.filled[id] && this.props.rollClicked) && 
       (fills[id] = true, 
         scores[id] = this.state.potential[id])
@@ -29,7 +33,7 @@ class TableContainer extends Component {
       filled: fills,
       score: scores,
     })
-    this.props.tableClick()
+    this.props.handleClick()
   }
 
   // triggered when dice change
@@ -43,6 +47,8 @@ class TableContainer extends Component {
 	checkDice(pips) {
 		let newActive = [...this.state.active];
     let newPotential = [...this.state.potential];
+    let bonus = this.state.yahtzees;
+    let bonusScore = this.state.score;
     
     //Extract dice information from pips
     let diceObject = {}
@@ -91,9 +97,14 @@ class TableContainer extends Component {
     newActive[10] ? (newPotential[10] = 40) : (newPotential[10] = 0)
     newActive[11] ? (newPotential[11] = 50) : (newPotential[11] = 0)
     newPotential[12] = diceSum
+    if (yahtzee && this.state.filled[11]) {bonus += 'X'} 
+    bonusScore[13] = bonus.length * 100
+
 
     this.setState((state) => ({ active: newActive }))
-		this.setState((state) => ({ potential: newPotential }))
+    this.setState((state) => ({ potential: newPotential }))
+    this.setState((state) => ({ yahtzees: bonus }))
+    this.setState((state) => ({ score: bonusScore }))
   }
 
   render() {
@@ -119,6 +130,7 @@ class TableContainer extends Component {
                   filled={this.state.filled}
                   score={this.state.score}
                   toggleCell={this.toggleCell} />
+            <Bonus yahtzees={this.state.yahtzees} />
             <LowerSums score={this.state.score} filled={this.state.filled}/>
         </table>
       </div>
@@ -143,7 +155,6 @@ const LOWER_ITEMS = [
   {name: 'Large Straight', description: 'Score 40', index: 10},
   {name: 'YAHTZEE', description: 'Score 50', index: 11},
   {name: 'Chance', description: 'Total of All Dice', index: 12},
-  {name: 'Bonus YAHTZEES', description: 'Score 100 each', index: 13},
 ]
 
 export default hot (module)(TableContainer);

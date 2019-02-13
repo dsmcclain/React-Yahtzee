@@ -16,10 +16,10 @@ class DiceContainer extends Component {
 			rollClicked: true,
 			tableClicked: false,
 		}
-		this.handleClick = this.handleClick.bind(this)
-		this.rollDice = this.rollDice.bind(this)
 		this.toggleHold = this.toggleHold.bind(this)
-		this.tableClick = this.tableClick.bind(this)
+		this.handleTableClick = this.handleTableClick.bind(this)
+		this.handleRollClick = this.handleRollClick.bind(this)
+		this.rollDice = this.rollDice.bind(this)
 	}
 
 	// triggered when dice are clicked (callback from Dice.js)
@@ -29,14 +29,12 @@ class DiceContainer extends Component {
 		this.setState({hold: holds})
 	}
 
-	tableClick() {
-		this.setState({tableClicked: true, rollClicked: false})
-		console.log(this.state.tableClicked)
-		console.log(this.state.rollClicked)
+	handleTableClick() {
+		this.setState({tableClicked: true, rollClicked: false, roll: 3})
 	}
 
 	// triggered when roll button is clicked (callback from RollButton.js)
-	handleClick() {
+	handleRollClick() {
 		if (this.state.roll === 3 && this.state.tableClicked) {
 			this.setState((state) => ({ roll: 1 }))
 			this.setState((state) => ({ hold: [false, false, false, false, false] }))
@@ -64,7 +62,7 @@ class DiceContainer extends Component {
 	render () {
 		return (
 			<div className="app-container">
-				<RollButton roll={this.state.roll} handleClick={this.handleClick} tableClosed={this.state.tableClick}/>
+				<RollButton roll={this.state.roll} handleClick={this.handleRollClick} />
 				<RollCount roll={this.state.roll} />
 				<div className="dice-area">
 					<div className="dice-bar">
@@ -77,7 +75,7 @@ class DiceContainer extends Component {
 					<div>
 						<TableContainer pips={this.state.pips} 
 														roll={this.state.roll} 
-														tableClick={this.tableClick}
+														handleClick={this.handleTableClick}
 														rollClicked={this.state.rollClicked} />
 					</div>
 				</div>

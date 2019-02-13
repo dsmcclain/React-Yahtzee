@@ -6,7 +6,7 @@ const RollButton = (props) => {
 	return (
 			<button id="roll-btn"
 				className={`roll-button${props.roll === 3? ' reroll' : ''}`}
-				onClick={!props.tableClosed && props.handleClick}>
+				onClick={props.handleClick}>
 				{props.roll === 3? 'Reroll!' : 'Roll!'}
 			</button>
 	)
