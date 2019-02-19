@@ -4,6 +4,7 @@ import Rows from "../components/Rows.js"
 import UpperSums from "../components/UpperSums.js"
 import LowerSums from "../components/LowerSums.js"
 import Bonus from "../components/Bonus.js"
+import Modal from "../components/Modal.js"
 import "../styles/ScoreTable.css"
 
 class TableContainer extends Component {
@@ -17,10 +18,14 @@ class TableContainer extends Component {
                false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       yahtzees: '',
+      modalOpen: true,
 
     }
     this.toggleCell = this.toggleCell.bind(this)
+    this.modalClose = this.modalClose.bind(this)
   }
+
+  modalClose(){ this.setState({ modalOpen: false })}
 
   toggleCell(id) {
     let fills = this.state.filled;
@@ -33,7 +38,7 @@ class TableContainer extends Component {
       filled: fills,
       score: scores,
     })
-    this.props.handleClick()
+    this.props.handleTableClick()
   }
 
   // triggered when dice change
@@ -109,7 +114,11 @@ class TableContainer extends Component {
 
   render() {
     return (
-      <div className="scorecard-canvas">
+      
+      <div className="scorecard-canvas" id="modal-root">
+        <Modal modalOpen={this.state.modalOpen} modalClose={this.modalClose}>
+          Modal Child
+        </Modal>
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
           <th>Score</th>
@@ -121,8 +130,8 @@ class TableContainer extends Component {
                   toggleCell={this.toggleCell} />
             <UpperSums score={this.state.score} filled={this.state.filled}/>
         </table>
-        <table className="upper-scorecard">
-          <th colSpan="2">Upper Section</th>
+        <table className="lower-scorecard">
+          <th colSpan="2">Lower Section</th>
           <th>Score</th>
             <Rows items={LOWER_ITEMS}
                   active={this.state.active}
