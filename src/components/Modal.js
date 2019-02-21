@@ -7,7 +7,7 @@ const Modal = (props) => {
   return (
     props.modalOpen ?
       ReactDOM.createPortal(
-      <div className="modal-overlay">
+      <div className="modal-overlay" onClick={props.modalClose}>
         <div className="modal-div" onClick={props.modalClose}>
           {props.children}
           <hr />    

@@ -117,7 +117,7 @@ class TableContainer extends Component {
       
       <div className="scorecard-canvas" id="modal-root">
         <Modal modalOpen={this.state.modalOpen} modalClose={this.modalClose}>
-          Modal Child
+          This is the sample modal.
         </Modal>
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
