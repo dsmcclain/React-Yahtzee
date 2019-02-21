@@ -21,11 +21,27 @@ class TableContainer extends Component {
       modalOpen: true,
 
     }
+    this.onCellClick = this.onCellClick.bind(this)
     this.toggleCell = this.toggleCell.bind(this)
     this.modalClose = this.modalClose.bind(this)
   }
 
   modalClose(){ this.setState({ modalOpen: false })}
+
+  onCellClick(id) {
+    let modalTrigger = false
+    if (this.state.potential[id] === 0) {
+      for (let i = 0; i < 15; i++) {
+      if (i !== id) {
+        if (this.state.score[i] === 0 && this.state.potential[i] !== 0) {
+          modalTrigger = true
+          break
+        }
+      } 
+    }}
+    modalTrigger ? this.setState({ modalOpen: modalTrigger }) 
+    : this.toggleCell(id)
+  }
 
   toggleCell(id) {
     let fills = this.state.filled;
@@ -127,7 +143,7 @@ class TableContainer extends Component {
                   potential={this.state.potential}
                   filled={this.state.filled}
                   score={this.state.score}
-                  toggleCell={this.toggleCell} />
+                  toggleCell={this.onCellClick} />
             <UpperSums score={this.state.score} filled={this.state.filled}/>
         </table>
         <table className="lower-scorecard">
@@ -138,7 +154,7 @@ class TableContainer extends Component {
                   potential={this.state.potential}
                   filled={this.state.filled}
                   score={this.state.score}
-                  toggleCell={this.toggleCell} />
+                  toggleCell={this.onCellClick} />
             <Bonus yahtzees={this.state.yahtzees} />
             <LowerSums score={this.state.score} filled={this.state.filled}/>
         </table>
