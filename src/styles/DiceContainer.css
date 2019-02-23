@@ -7,16 +7,16 @@ body {
 	align-items: center;
 }
 .roll-count {
-	background-color: #FFFE90;	
-	border-radius: 5px;
-	box-shadow: -6px 6px 2px #888;
-	display: flex;
 	flex-direction: column;
-	align-items: center;
+	text-align: center;
 	padding: 15px;
 }
+.roll-count h1 {
+	margin: 4px;
+}
 .roll-count h2 {
-	margin: 2px
+	margin: 2px;
+	font-size: 1.1rem;
 }
 .dice-area {
 	display: flex;
@@ -43,26 +43,31 @@ body {
 .dice-bar > .hold {
 	border: 10px solid #F00;
 }
-.score-count {
+.roll-area {
+	display: flex;
+	justify-content: center;
+	margin: 15px;
+}
+.roll-canvas {
 	background-color: #FFFE90;	
-	border-radius: 5px;
 	box-shadow: -6px 6px 2px #888;
-	padding: 15px;
+	display: flex;
+	align-items: center;
 }
 
 /* STYLES FOR ROLL BUTTON */
 .roll-button {
-	background-color: #FFFE90;
-	border: none;
-	border-radius: 50%;
-	box-shadow: -4px 4px 2px #888;
-	margin: 1.5em;
-	width: 75px;
-	height: 75px;
+	color: #000;
+	background-color: #FFA631;
+	font-size: 1.4rem;
+	font-weight: bold;
+	width: 130px;
+	height: 130px;
 	cursor: pointer;
+	border: 10px solid #FFFE90;;
 }
 .reroll {
-	background-color: #FFA631;
+	border: 10px solid #F00;
 }
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
