@@ -27,7 +27,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 1.5em;
+	margin-top: 1.5em;
 }
 .dice-bar img {
 	display: block;
