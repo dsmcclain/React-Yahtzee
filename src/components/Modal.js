@@ -9,9 +9,10 @@ const Modal = (props) => {
       ReactDOM.createPortal(
       <div className="modal-overlay" onClick={props.modalClose}>
         <div className="modal-div" onClick={props.modalClose}>
-          {props.children}
-          <hr />    
-          <button onClick={props.modalClose}>Close</button>  
+          {props.message}
+          <hr />
+          <button onClick={props.modalSubmit}>Do It</button>  
+          <button onClick={props.modalClose}>Cancel</button>  
         </div>
       </div>,
       document.body

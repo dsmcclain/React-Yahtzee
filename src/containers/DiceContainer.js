@@ -77,7 +77,8 @@ class DiceContainer extends Component {
 						<TableContainer pips={this.state.pips} 
 														roll={this.state.roll} 
 														handleTableClick={this.handleTableClick}
-														rollClicked={this.state.rollClicked} />
+														rollClicked={this.state.rollClicked}
+														tableClicked={this.state.tableClicked} />
 					</div>
 				</div>
 			</div>

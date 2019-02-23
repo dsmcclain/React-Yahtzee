@@ -18,30 +18,51 @@ class TableContainer extends Component {
                false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       yahtzees: '',
-      modalOpen: true,
+      cellId: null,
+      modalOpen: false,
+      modalMessage: '',
 
     }
     this.onCellClick = this.onCellClick.bind(this)
     this.toggleCell = this.toggleCell.bind(this)
     this.modalClose = this.modalClose.bind(this)
+    this.modalSubmit = this.modalSubmit.bind(this)
   }
 
   modalClose(){ this.setState({ modalOpen: false })}
 
+  modalSubmit(){ 
+    this.setState({ modalOpen: false })
+    this.toggleCell(this.state.cellId)
+  }
+
   onCellClick(id) {
     let modalTrigger = false
-    if (this.state.potential[id] === 0) {
+    if (!this.props.tableClicked) {
+      if (this.props.roll < 3 ) {
+      modalTrigger = true
+      let message = 'Are you sure you want to end your turn? You can still roll again.'
+      this.state.potential[id] === 0 && 
+        (message += ' (This will result in a score of zero for this item.)')
+      this.setState({ 
+          cellId: id,
+          modalMessage: message},
+        () => {this.openModal()})
+      } else if (this.state.potential[id] === 0) {
       for (let i = 0; i < 15; i++) {
       if (i !== id) {
         if (this.state.score[i] === 0 && this.state.potential[i] !== 0) {
           modalTrigger = true
-          break
+          this.setState({ cellId: id, 
+                          modalMessage: 'Are you sure you want to put a zero here?'}, 
+                       () => {this.openModal()})
         }
       } 
-    }}
-    modalTrigger ? this.setState({ modalOpen: modalTrigger }) 
-    : this.toggleCell(id)
+    }}}
+    !modalTrigger && this.toggleCell(id)
   }
+
+  openModal() { this.setState({modalOpen: true})}
 
   toggleCell(id) {
     let fills = this.state.filled;
@@ -130,11 +151,11 @@ class TableContainer extends Component {
 
   render() {
     return (
-      
       <div className="scorecard-canvas" id="modal-root">
-        <Modal modalOpen={this.state.modalOpen} modalClose={this.modalClose}>
-          This is the sample modal.
-        </Modal>
+        <Modal modalOpen={this.state.modalOpen} 
+               modalClose={this.modalClose}
+               modalSubmit={this.modalSubmit}
+               message={this.state.modalMessage} />
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
           <th>Score</th>
