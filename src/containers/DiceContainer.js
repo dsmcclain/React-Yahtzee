@@ -63,8 +63,6 @@ class DiceContainer extends Component {
 	render () {
 		return (
 			<div className="app-container">
-				<RollButton roll={this.state.roll} handleClick={this.handleRollClick} />
-				<RollCount roll={this.state.roll} />
 				<div className="dice-area">
 					<div className="dice-bar">
 						<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleHold={this.toggleHold} />
@@ -73,12 +71,18 @@ class DiceContainer extends Component {
 						<Dice id={3} pips={this.state.pips[3]} hold={this.state.hold[3]} toggleHold={this.toggleHold} />
 						<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
 					</div>	
-					<div>
-						<TableContainer pips={this.state.pips} 
-														roll={this.state.roll} 
-														handleTableClick={this.handleTableClick}
-														rollClicked={this.state.rollClicked}
-														tableClicked={this.state.tableClicked} />
+				<div>
+				<div className = "roll-area">
+					<div className="roll-canvas">
+						<RollButton roll={this.state.roll} handleClick={this.handleRollClick} />
+						<RollCount roll={this.state.roll} />
+					</div>
+				</div>
+				<TableContainer pips={this.state.pips} 
+												roll={this.state.roll} 
+												handleTableClick={this.handleTableClick}
+												rollClicked={this.state.rollClicked}
+												tableClicked={this.state.tableClicked} />
 					</div>
 				</div>
 			</div>

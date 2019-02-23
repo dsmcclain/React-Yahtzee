@@ -5,7 +5,9 @@ const RollCount = (props) => {
   return (
     <div className="roll-count">
       <h2>
-        Rolls Remaining
+        ROLLS
+        <br/>
+        REMAINING
       </h2>
       <h1>
         {3 - props.roll}

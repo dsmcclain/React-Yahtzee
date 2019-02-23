@@ -151,7 +151,7 @@ class TableContainer extends Component {
 
   render() {
     return (
-      <div className="scorecard-canvas" id="modal-root">
+      <div className="scorecard-canvas">
         <Modal modalOpen={this.state.modalOpen} 
                modalClose={this.modalClose}
                modalSubmit={this.modalSubmit}

@@ -7,7 +7,7 @@ const RollButton = (props) => {
 			<button id="roll-btn"
 				className={`roll-button${props.roll === 3? ' reroll' : ''}`}
 				onClick={props.handleClick}>
-				{props.roll === 3? 'Reroll!' : 'Roll!'}
+				{props.roll === 3? 'REROLL!' : 'ROLL!'}
 			</button>
 	)
 }
