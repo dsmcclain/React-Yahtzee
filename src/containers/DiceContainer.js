@@ -29,6 +29,7 @@ class DiceContainer extends Component {
 		this.setState({hold: holds})
 	}
 
+	// triggered when a cell in table is clicked (callback from TableContainer.js)
 	handleTableClick() {
 		this.setState({tableClicked: true, rollClicked: false, roll: 3})
 	}
@@ -75,8 +76,9 @@ class DiceContainer extends Component {
 					<div>
 						<TableContainer pips={this.state.pips} 
 														roll={this.state.roll} 
-														handleClick={this.handleTableClick}
-														rollClicked={this.state.rollClicked} />
+														handleTableClick={this.handleTableClick}
+														rollClicked={this.state.rollClicked}
+														tableClicked={this.state.tableClicked} />
 					</div>
 				</div>
 			</div>

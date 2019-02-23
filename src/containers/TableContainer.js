@@ -4,6 +4,7 @@ import Rows from "../components/Rows.js"
 import UpperSums from "../components/UpperSums.js"
 import LowerSums from "../components/LowerSums.js"
 import Bonus from "../components/Bonus.js"
+import Modal from "../components/Modal.js"
 import "../styles/ScoreTable.css"
 
 class TableContainer extends Component {
@@ -17,10 +18,51 @@ class TableContainer extends Component {
                false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       yahtzees: '',
+      cellId: null,
+      modalOpen: false,
+      modalMessage: '',
 
     }
+    this.onCellClick = this.onCellClick.bind(this)
     this.toggleCell = this.toggleCell.bind(this)
+    this.modalClose = this.modalClose.bind(this)
+    this.modalSubmit = this.modalSubmit.bind(this)
   }
+
+  modalClose(){ this.setState({ modalOpen: false })}
+
+  modalSubmit(){ 
+    this.setState({ modalOpen: false })
+    this.toggleCell(this.state.cellId)
+  }
+
+  onCellClick(id) {
+    let modalTrigger = false
+    if (!this.props.tableClicked) {
+      if (this.props.roll < 3 ) {
+      modalTrigger = true
+      let message = 'Are you sure you want to end your turn? You can still roll again.'
+      this.state.potential[id] === 0 && 
+        (message += ' (This will result in a score of zero for this item.)')
+      this.setState({ 
+          cellId: id,
+          modalMessage: message},
+        () => {this.openModal()})
+      } else if (this.state.potential[id] === 0) {
+      for (let i = 0; i < 15; i++) {
+      if (i !== id) {
+        if (this.state.score[i] === 0 && this.state.potential[i] !== 0) {
+          modalTrigger = true
+          this.setState({ cellId: id, 
+                          modalMessage: 'Are you sure you want to put a zero here?'}, 
+                       () => {this.openModal()})
+        }
+      } 
+    }}}
+    !modalTrigger && this.toggleCell(id)
+  }
+
+  openModal() { this.setState({modalOpen: true})}
 
   toggleCell(id) {
     let fills = this.state.filled;
@@ -33,7 +75,7 @@ class TableContainer extends Component {
       filled: fills,
       score: scores,
     })
-    this.props.handleClick()
+    this.props.handleTableClick()
   }
 
   // triggered when dice change
@@ -109,7 +151,11 @@ class TableContainer extends Component {
 
   render() {
     return (
-      <div className="scorecard-canvas">
+      <div className="scorecard-canvas" id="modal-root">
+        <Modal modalOpen={this.state.modalOpen} 
+               modalClose={this.modalClose}
+               modalSubmit={this.modalSubmit}
+               message={this.state.modalMessage} />
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
           <th>Score</th>
@@ -118,18 +164,18 @@ class TableContainer extends Component {
                   potential={this.state.potential}
                   filled={this.state.filled}
                   score={this.state.score}
-                  toggleCell={this.toggleCell} />
+                  toggleCell={this.onCellClick} />
             <UpperSums score={this.state.score} filled={this.state.filled}/>
         </table>
-        <table className="upper-scorecard">
-          <th colSpan="2">Upper Section</th>
+        <table className="lower-scorecard">
+          <th colSpan="2">Lower Section</th>
           <th>Score</th>
             <Rows items={LOWER_ITEMS}
                   active={this.state.active}
                   potential={this.state.potential}
                   filled={this.state.filled}
                   score={this.state.score}
-                  toggleCell={this.toggleCell} />
+                  toggleCell={this.onCellClick} />
             <Bonus yahtzees={this.state.yahtzees} />
             <LowerSums score={this.state.score} filled={this.state.filled}/>
         </table>
