@@ -38,7 +38,7 @@ class TableContainer extends Component {
 
   onCellClick(id) {
     let modalTrigger = false
-    if (!this.props.tableClicked) {
+    if (!this.state.filled[id] && !this.props.tableClicked) {
       if (this.props.roll < 3 ) {
       modalTrigger = true
       let message = 'Are you sure you want to end your turn? You can still roll again.'
@@ -50,16 +50,14 @@ class TableContainer extends Component {
         () => {this.openModal()})
       } else if (this.state.potential[id] === 0) {
       for (let i = 0; i < 15; i++) {
-      if (i !== id) {
-        if (this.state.score[i] === 0 && this.state.potential[i] !== 0) {
-          modalTrigger = true
-          this.setState({ cellId: id, 
-                          modalMessage: 'Are you sure you want to put a zero here?'}, 
-                       () => {this.openModal()})
-        }
-      } 
+          if (this.state.score[i] === 0 && this.state.potential[i]) {
+            modalTrigger = true
+            this.setState({ cellId: id, 
+                            modalMessage: 'Are you sure you want to put a zero here?'}, 
+                        () => {this.openModal()})
+          }
     }}}
-    !modalTrigger && this.toggleCell(id)
+    (!modalTrigger && !this.state.filled[id]) && this.toggleCell(id)
   }
 
   openModal() { this.setState({modalOpen: true})}
@@ -68,7 +66,7 @@ class TableContainer extends Component {
     let fills = this.state.filled;
     let scores = this.state.score;
 
-    (!this.state.filled[id] && this.props.rollClicked) && 
+    this.props.rollClicked && 
       (fills[id] = true, 
         scores[id] = this.state.potential[id])
     this.setState ({
