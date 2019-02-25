@@ -5,14 +5,14 @@ import "../styles/ScoreTable.css"
 
 const Modal = (props) => {
   return (
-    props.modalOpen ?
+    props.modalTrigger ?
       ReactDOM.createPortal(
-      <div className="modal-overlay" onClick={props.modalClose}>
-        <div className="modal-div" onClick={props.modalClose}>
+      <div className="modal-overlay" onClick={props.closeModal}>
+        <div className="modal-div" onClick={props.closeModal}>
           {props.message}
           <hr />
-          <button onClick={props.modalSubmit}>Do It</button>  
-          <button onClick={props.modalClose}>Cancel</button>  
+          <button onClick={props.submitModal}>Do It</button>  
+          <button onClick={props.closeModal}>Cancel</button>  
         </div>
       </div>,
       document.body

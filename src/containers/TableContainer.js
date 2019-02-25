@@ -19,23 +19,26 @@ class TableContainer extends Component {
       score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       yahtzees: '',
       cellId: null,
-      modalOpen: false,
+      modalTrigger: false,
       modalMessage: '',
-
     }
     this.onCellClick = this.onCellClick.bind(this)
     this.toggleCell = this.toggleCell.bind(this)
-    this.modalClose = this.modalClose.bind(this)
-    this.modalSubmit = this.modalSubmit.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+    this.submitModal = this.submitModal.bind(this)
   }
 
-  modalClose(){ this.setState({ modalOpen: false })}
+  openModal() { this.setState({modalTrigger: true})}
 
-  modalSubmit(){ 
-    this.setState({ modalOpen: false })
+  closeModal(){ this.setState({ modalTrigger: false })}
+
+  submitModal(){ 
+    this.setState({ modalTrigger: false })
     this.toggleCell(this.state.cellId)
   }
 
+  //This function checks for whether a modal should be called
+  //before making changes to scorecard (callback from Cell.js)
   onCellClick(id) {
     let modalTrigger = false
     if (!this.state.filled[id] && !this.props.tableClicked) {
@@ -50,18 +53,18 @@ class TableContainer extends Component {
         () => {this.openModal()})
       } else if (this.state.potential[id] === 0) {
       for (let i = 0; i < 15; i++) {
-          if (this.state.score[i] === 0 && this.state.potential[i]) {
+          if (!this.state.filled[i] && this.state.potential[i]) {
             modalTrigger = true
-            this.setState({ cellId: id, 
-                            modalMessage: 'Are you sure you want to put a zero here?'}, 
-                        () => {this.openModal()})
+            this.setState({ 
+              cellId: id, 
+              modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
+              () => {this.openModal()})
           }
     }}}
     (!modalTrigger && !this.state.filled[id]) && this.toggleCell(id)
   }
 
-  openModal() { this.setState({modalOpen: true})}
-
+  //changes scorecard
   toggleCell(id) {
     let fills = this.state.filled;
     let scores = this.state.score;
@@ -95,8 +98,7 @@ class TableContainer extends Component {
     let diceSum = 0
     pips.forEach(dice => {
       diceObject[dice] = (diceObject[dice] || 0)+1
-      diceSum = diceSum + dice + 1 
-    })
+      diceSum = diceSum + dice + 1 })
     let pair = Object.values(diceObject).includes(2)
     let triple = Object.values(diceObject).includes(3)
     let quadruple = Object.values(diceObject).includes(4)
@@ -140,19 +142,20 @@ class TableContainer extends Component {
     if (yahtzee && this.state.filled[11]) {bonus += 'X'} 
     bonusScore[13] = bonus.length * 100
 
-
-    this.setState((state) => ({ active: newActive }))
-    this.setState((state) => ({ potential: newPotential }))
-    this.setState((state) => ({ yahtzees: bonus }))
-    this.setState((state) => ({ score: bonusScore }))
+    this.setState({
+      active: newActive,
+      potential: newPotential,
+      yahtzees: bonus,
+      score: bonusScore,
+    })
   }
 
   render() {
     return (
       <div className="scorecard-canvas">
-        <Modal modalOpen={this.state.modalOpen} 
-               modalClose={this.modalClose}
-               modalSubmit={this.modalSubmit}
+        <Modal modalTrigger={this.state.modalTrigger} 
+               closeModal={this.closeModal}
+               submitModal={this.submitModal}
                message={this.state.modalMessage} />
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
