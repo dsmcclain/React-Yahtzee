@@ -17,21 +17,21 @@ const LowerSums = (props) => {
       <tr>
         <td>Upper Total</td>
         <td> ⇒ </td>
-        <td className={upperComplete ? " filled" : " empty" }>
+        <td className={upperComplete ? " filled" : " incomplete" }>
           {upperSum}
         </td>
       </tr>
       <tr>
         <td>Lower Total</td>
         <td> ⇒ </td>
-        <td className={lowerComplete ? " filled" : " empty"}>
+        <td className={lowerComplete ? " filled" : " incomplete"}>
           {lowerSum} 
         </td>
       </tr>
       <tr>
         <td>Grand Total</td>
         <td> ⇒ </td>
-        <td className={(upperComplete && lowerComplete) ? " filled" : " empty"}>
+        <td className={(upperComplete && lowerComplete) ? " filled" : " incomplete"}>
           {upperSum + lowerSum}</td>
       </tr>
     </>

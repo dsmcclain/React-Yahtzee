@@ -26,6 +26,7 @@ class TableContainer extends Component {
     this.toggleCell = this.toggleCell.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.submitModal = this.submitModal.bind(this)
+    this.checkComplete = this.checkComplete.bind(this)
   }
 
   openModal() { this.setState({modalTrigger: true})}
@@ -76,15 +77,22 @@ class TableContainer extends Component {
       filled: fills,
       score: scores,
     })
-    this.props.handleTableClick()
+    this.props.handleTableChange()
   }
 
   // triggered when dice change
 	componentDidUpdate(prevProps) {
 		if (this.props.pips !== prevProps.pips) {
       this.checkDice(this.props.pips)
-		}
-	}
+    }
+    if (this.props.tableClicked !== prevProps.tableClicked) {
+      this.checkComplete()
+    }
+  }
+  
+  checkComplete() {
+    !this.state.filled.includes(false) && this.props.gameOver()
+  }
 
   // Logic for real-time updating of scoring options on scoretable
 	checkDice(pips) {

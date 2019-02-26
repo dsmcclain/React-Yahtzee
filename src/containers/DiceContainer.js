@@ -3,6 +3,7 @@ import {hot} from "react-hot-loader"
 import RollButton from "../components/RollButton.js"
 import RollCount from "../components/RollCount.js"
 import Dice from "../components/Dice.js"
+import GameOver from "../components/GameOver.js"
 import TableContainer from "./TableContainer.js"
 import "../styles/DiceContainer.css"
 
@@ -15,28 +16,43 @@ class DiceContainer extends Component {
 			hold: [false, false, false, false, false],
 			rollClicked: true,
 			tableClicked: false,
+			gameOver: false,
 		}
+		this.gameOver = this.gameOver.bind(this)
+		this.resetGame = this.resetGame.bind(this)
 		this.toggleHold = this.toggleHold.bind(this)
-		this.handleTableClick = this.handleTableClick.bind(this)
+		this.handleTableChange = this.handleTableChange.bind(this)
 		this.handleRollClick = this.handleRollClick.bind(this)
 		this.rollDice = this.rollDice.bind(this)
 	}
 
-	// triggered when dice are clicked (callback from Dice.js)
-	toggleHold(id) {
-		let holds = this.state.hold
-		holds[id] = !holds[id]
-		this.setState({hold: holds})
+	gameOver() {
+		this.setState({gameOver: true})
 	}
 
-	// triggered when a cell in table is clicked (callback from TableContainer.js)
-	handleTableClick() {
+	resetGame() {
+		console.log('reset the game!')
+	}
+
+	// triggered when dice are clicked (callback from Dice.js)
+	toggleHold(id) {
+		if (this.state.roll !== 0) {
+			let holds = this.state.hold
+			holds[id] = !holds[id]
+			this.setState({hold: holds})
+		}
+	}
+
+	// triggered when a cell in table is changed (callback from TableContainer.js)
+	handleTableChange() {
 		this.setState({tableClicked: true, rollClicked: false, roll: 3})
 	}
 
 	// triggered when roll button is clicked (callback from RollButton.js)
 	handleRollClick() {
-		if (this.state.roll === 3 && this.state.tableClicked) {
+		if (this.state.gameOver) {
+			this.resetGame()
+		} else if (this.state.roll === 3 && this.state.tableClicked) {
 			this.setState((state) => ({ roll: 1 }))
 			this.setState((state) => ({ hold: [false, false, false, false, false] }))
 			this.setState((state) => ({ rollClicked: true }))
@@ -74,15 +90,19 @@ class DiceContainer extends Component {
 				<div>
 				<div className = "roll-area">
 					<div className="roll-canvas">
-						<RollButton roll={this.state.roll} handleClick={this.handleRollClick} />
+						<GameOver gameOver={this.state.gameOver} />
+						<RollButton roll={this.state.roll} 
+												handleRollClick={this.handleRollClick} 
+												gameOver={this.state.gameOver}/>
 						<RollCount roll={this.state.roll} />
 					</div>
 				</div>
 				<TableContainer pips={this.state.pips} 
 												roll={this.state.roll} 
-												handleTableClick={this.handleTableClick}
+												handleTableChange={this.handleTableChange}
 												rollClicked={this.state.rollClicked}
-												tableClicked={this.state.tableClicked} />
+												tableClicked={this.state.tableClicked}
+												gameOver={this.gameOver} />
 					</div>
 				</div>
 			</div>

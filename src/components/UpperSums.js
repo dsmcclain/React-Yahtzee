@@ -23,14 +23,14 @@ const UpperSums = (props) => {
       <tr>
         <td>Bonus</td>
         <td>(If Subtotal > 63)</td>
-        <td className={complete ? " filled" : " empty"}>
+        <td className={complete ? " filled" : " incomplete"}>
           {bonus} 
         </td>
       </tr>
       <tr>
         <td>Total</td>
         <td>Subtotal + Bonus</td>
-        <td className={complete? " filled" : " empty"}>
+        <td className={complete? " filled" : " incomplete"}>
           {subtotal + bonus}</td>
       </tr>
     </>

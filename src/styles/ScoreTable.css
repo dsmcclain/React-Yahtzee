@@ -1,9 +1,11 @@
 th {
-  border: none;
-  padding: 6px;
+	border: none;
+	cursor: default;
+	padding: 6px;
 }
 td {
 	border: 1px solid #000;
+	cursor: default;
   padding: 6px;
   max-width: 150px;
 }

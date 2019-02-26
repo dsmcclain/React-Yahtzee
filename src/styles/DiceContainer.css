@@ -6,18 +6,6 @@ body {
 	flex-direction: column;
 	align-items: center;
 }
-.roll-count {
-	flex-direction: column;
-	text-align: center;
-	padding: 15px;
-}
-.roll-count h1 {
-	margin: 4px;
-}
-.roll-count h2 {
-	margin: 2px;
-	font-size: 1.1rem;
-}
 .dice-area {
 	display: flex;
 	flex-direction: column;
@@ -35,6 +23,7 @@ body {
 	height: auto;
 }
 .dice-bar > .dice-container {
+	cursor: pointer;
 	margin: .5em;
 }
 .dice-bar > .free {
@@ -43,6 +32,18 @@ body {
 .dice-bar > .hold {
 	border: 10px solid #F00;
 }
+
+/*STYLES FOR ROLL DISPLAY AREA*/
+.game {
+	display: none;
+}
+.game-over {
+	flex-direction: column;
+	font-size: 1.1rem;
+	font-weight: bold;
+	padding: 15px;
+	text-align: center;
+}
 .roll-area {
 	display: flex;
 	justify-content: center;
@@ -50,9 +51,22 @@ body {
 }
 .roll-canvas {
 	background-color: #FFFE90;	
+	cursor: default;
 	box-shadow: -6px 6px 2px #888;
 	display: flex;
 	align-items: center;
+}
+.roll-count {
+	flex-direction: column;
+	text-align: center;
+	padding: 15px;
+}
+.roll-count h1 {
+	margin: 4px;
+}
+.roll-count h2 {
+	margin: 2px;
+	font-size: 1.1rem;
 }
 
 /* STYLES FOR ROLL BUTTON */

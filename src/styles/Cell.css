@@ -4,9 +4,15 @@
 .active {
   color: red;
   border: 1px solid red;
+  cursor: pointer;
 }
 .empty {
   color: #FFFE90;
+  cursor: pointer;
+}
+.incomplete {
+  color: #FFFE90;
+  cursor: default; 
 }
 .gray {
   color: #666;
