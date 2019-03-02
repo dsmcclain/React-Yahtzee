@@ -27,6 +27,7 @@ class TableContainer extends Component {
     this.closeModal = this.closeModal.bind(this)
     this.submitModal = this.submitModal.bind(this)
     this.checkComplete = this.checkComplete.bind(this)
+    this.resetScores = this.resetScores.bind(this)
   }
 
   openModal() { this.setState({modalTrigger: true})}
@@ -41,28 +42,30 @@ class TableContainer extends Component {
   //This function checks for whether a modal should be called
   //before making changes to scorecard (callback from Cell.js)
   onCellClick(id) {
-    let modalTrigger = false
-    if (!this.state.filled[id] && !this.props.tableClicked) {
-      if (this.props.roll < 3 ) {
-      modalTrigger = true
-      let message = 'Are you sure you want to end your turn? You can still roll again.'
-      this.state.potential[id] === 0 && 
-        (message += ' (This will result in a score of zero for this item.)')
-      this.setState({ 
-          cellId: id,
-          modalMessage: message},
-        () => {this.openModal()})
-      } else if (this.state.potential[id] === 0) {
-      for (let i = 0; i < 15; i++) {
-          if (!this.state.filled[i] && this.state.potential[i]) {
-            modalTrigger = true
-            this.setState({ 
-              cellId: id, 
-              modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
-              () => {this.openModal()})
-          }
-    }}}
-    (!modalTrigger && !this.state.filled[id]) && this.toggleCell(id)
+    if (this.props.roll !== 0) {
+      let modalTrigger = false
+      if (!this.state.filled[id] && !this.props.tableClicked) {
+        if (this.props.roll < 3 ) {
+        modalTrigger = true
+        let message = 'Are you sure you want to end your turn? You can still roll again.'
+        this.state.potential[id] === 0 && 
+          (message += ' (This will result in a score of zero for this item.)')
+        this.setState({ 
+            cellId: id,
+            modalMessage: message},
+          () => {this.openModal()})
+        } else if (this.state.potential[id] === 0) {
+        for (let i = 0; i < 15; i++) {
+            if (!this.state.filled[i] && this.state.potential[i]) {
+              modalTrigger = true
+              this.setState({ 
+                cellId: id, 
+                modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
+                () => {this.openModal()})
+            }
+      }}}
+      (!modalTrigger && !this.state.filled[id]) && this.toggleCell(id)
+    }
   }
 
   //changes scorecard
@@ -82,12 +85,30 @@ class TableContainer extends Component {
 
   // triggered when dice change
 	componentDidUpdate(prevProps) {
-		if (this.props.pips !== prevProps.pips) {
-      this.checkDice(this.props.pips)
+    if (this.props !== prevProps) {
+      if (this.props.roll === 0) {
+        this.resetScores()
+      } else if (this.props.pips !== prevProps.pips) {
+          this.checkDice(this.props.pips)
+      } else if (this.props.tableClicked !== prevProps.tableClicked) {
+        this.checkComplete()
+      }
     }
-    if (this.props.tableClicked !== prevProps.tableClicked) {
-      this.checkComplete()
-    }
+  }
+
+  resetScores() {
+    this.setState({
+      active: [false, false, false, false, false, false, false,
+        false, false, false, false, false, false],
+      potential: [0,0,0,0,0,0,0,0,0,0,0,0,0],
+      filled: [false, false, false, false, false, false, false,
+        false, false, false, false, false, false],
+      score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      yahtzees: '',
+      cellId: null,
+      modalTrigger: false,
+      modalMessage: '',
+    })
   }
   
   checkComplete() {
@@ -168,6 +189,7 @@ class TableContainer extends Component {
         <table className="upper-scorecard">
           <th colSpan="2">Upper Section</th>
           <th>Score</th>
+          <tbody>
             <Rows items={UPPER_ITEMS}
                   active={this.state.active}
                   potential={this.state.potential}
@@ -175,10 +197,12 @@ class TableContainer extends Component {
                   score={this.state.score}
                   toggleCell={this.onCellClick} />
             <UpperSums score={this.state.score} filled={this.state.filled}/>
+            </tbody>
         </table>
         <table className="lower-scorecard">
           <th colSpan="2">Lower Section</th>
           <th>Score</th>
+           <tbody>
             <Rows items={LOWER_ITEMS}
                   active={this.state.active}
                   potential={this.state.potential}
@@ -187,6 +211,7 @@ class TableContainer extends Component {
                   toggleCell={this.onCellClick} />
             <Bonus yahtzees={this.state.yahtzees} />
             <LowerSums score={this.state.score} filled={this.state.filled}/>
+            </tbody>
         </table>
       </div>
     )
