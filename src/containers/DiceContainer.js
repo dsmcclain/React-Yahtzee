@@ -10,6 +10,7 @@ import "../styles/DiceContainer.css"
 class DiceContainer extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			roll: 0,
 			pips: [0,0,0,0,0],
@@ -31,7 +32,14 @@ class DiceContainer extends Component {
 	}
 
 	resetGame() {
-		console.log('reset the game!')
+		this.setState({
+			roll: 0,
+			pips: [0,0,0,0,0],
+			hold: [false, false, false, false, false],
+			rollClicked: true,
+			tableClicked: false,
+			gameOver: false,
+		})
 	}
 
 	// triggered when dice are clicked (callback from Dice.js)
@@ -53,22 +61,23 @@ class DiceContainer extends Component {
 		if (this.state.gameOver) {
 			this.resetGame()
 		} else if (this.state.roll === 3 && this.state.tableClicked) {
-			this.setState((state) => ({ roll: 1 }))
-			this.setState((state) => ({ hold: [false, false, false, false, false] }))
-			this.setState((state) => ({ rollClicked: true }))
-			this.setState((state) => ({ tableClicked: false }))
-			this.rollDice([false, false, false, false, false])
+			this.setState({ roll: 1,
+											hold: [false, false, false, false, false],
+											rollClicked: true,
+											tableClicked: false },
+											() => {this.rollDice()}) //make sure rollDice()
+																							 // has up-to-date state
 		} else if (this.state.roll != 3) {
 			const rollCount = this.state.roll
-			this.setState((state) => ({roll: rollCount + 1}))
-			this.rollDice(this.state.hold)
+			this.setState({roll: rollCount + 1})
+			this.rollDice()
 		}
 	}
 
-	rollDice(holds) {
+	rollDice() {
 		let newPips = [...this.state.pips];
 		for (let i = 0; i < 5; i++){
-			if (!holds[i]) {
+			if (!this.state.hold[i]) {
 				const num = Math.floor(Math.random() * 6)
 				newPips[i] = num
 			}
