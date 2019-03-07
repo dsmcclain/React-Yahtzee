@@ -1,10 +1,16 @@
-<strong>Welcome to React Yahtzee! </strong>
+## <strong>Welcome to React Yahtzee! </strong>
 
-Current Release: v1.0 
+### Current Release: v1.1
 
-Version 1.0 is the first fully functional release of the game.  This means that the game is fully playable according to the rules of Yahtzee.  When you complete a game, the app will total your scores for you.  There is currently no way to start a new game other than reloading the app.
+### <strong> What's new in 1.1 </strong>
 
-If you would like to run the game locally, you will need node package manager (npm). To run it locally, fork the repository, navigate to the directory containing the project and run
+-Modals now exist to help the user.  If a user clicks on the score table before they have completed all their rolls for the turn, or if the cell they click will score a zero and there are other cells that could register a non-zero score, a modal will pop up to advise them.
+-Game Restart now exists. When a game ends the roll button will switch to a 'new game' button. Clicking it will reset the scorecard and dice to a starting position.
+-A few styling changes were applied to make the game look and feel a lil nicer :)
+
+### If you would like to run the game locally
+
+...clone the repository, navigate to the directory containing the repository and run
 ```
 npm install
 ```
