@@ -19,7 +19,7 @@ class Cell extends Component{
     
     return (
       <td className={`cell ${this.props.filled ? "filled" : 
-            (this.props.active ? "active" : "empty")}`} 
+          (this.props.active ? "active" : "empty")}`} 
           onClick={this.cellClick}>{cell}</td>
     )
   }

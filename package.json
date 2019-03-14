@@ -1,7 +1,7 @@
 {
-  "name": "react-sample-app",
-  "version": "1.0.0",
-  "description": "A React App Built by dsmcclain",
+  "name": "react-yahtzee",
+  "version": "1.1.0",
+  "description": "Yahtzee, built with React, by dsmcclain",
   "main": "index.js",
   "scripts": {
     "build": "babel src -d lib",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dsmcclain/react-sample-app.git"
+    "url": "git+https://github.com/dsmcclain/React-Yahtzee.git"
   },
   "author": "dsmcclain",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dsmcclain/react-sample-app/issues"
+    "url": "https://github.com/dsmcclain/React-Yahtzee/issues"
   },
-  "homepage": "https://github.com/dsmcclain/react-sample-app#readme",
+  "homepage": "https://github.com/dsmcclain/React-Yahtzee#readme",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
