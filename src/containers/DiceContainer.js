@@ -41,7 +41,7 @@ class DiceContainer extends Component {
 		}
 	}
 
-	// triggered when a cell in table is changed (callback from TableContainer.js)
+	// (callback from TableContainer.js)
 	handleTableChange() {
 		this.setState({tableClicked: true, rollClicked: false, roll: 3})
 	}

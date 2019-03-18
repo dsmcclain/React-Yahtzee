@@ -23,82 +23,81 @@ class TableContainer extends Component {
       modalMessage: '',
     }
     this.handleCellClick = this.handleCellClick.bind(this)
+    this.cellIsClickable = this.cellIsClickable.bind(this)
+    this.otherCellsHavePotential = this.otherCellsHavePotential.bind(this)
     this.setModalMessage = this.setModalMessage.bind(this)
     this.toggleCell = this.toggleCell.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.submitModal = this.submitModal.bind(this)
     this.checkComplete = this.checkComplete.bind(this)
-    this.resetScores = this.resetScores.bind(this)
+    this.resetTable = this.resetTable.bind(this)
   }
 
   handleCellClick(cell_id) {
-    if (this.props.roll !== 0 && !this.state.filled[cell_id]) {
+    if (this.cellIsClickable(cell_id)) {
       if (this.props.roll < 3 || this.state.potential[cell_id] === 0 ) {
-        if (!this.props.tableClicked) {
-          this.setState({ cell_id: cell_id }, () => {this.setModalMessage()})
-      }} else {
+        this.setState({ cell_id: cell_id }, () => {this.setModalMessage()})
+      } else {
         this.setState({ cell_id: cell_id }, () => {this.toggleCell()})
       }
     }
   }
 
+  cellIsClickable(cell_id) {
+    return (this.props.roll !== 0 && !this.props.tableClicked && !this.state.filled[cell_id])
+  }
+
   setModalMessage() {
-    const { cell_id, filled, potential } = this.state
+    const { cell_id, potential } = this.state
     if (this.props.roll < 3 ) {
       let message = 'Are you sure you want to end your turn? You can still roll again.'
       potential[cell_id] === 0 && 
         (message += ' (This will result in a score of zero for this item.)')
-      this.setState({ 
-        cell_id: cell_id,
-        modalMessage: message},
-        () => {this.openModal()})
-    } else if (potential[cell_id] === 0) {
-      for (let i = 0; i < 15; i++) {  //better way to do this? if only the 'potential' state didn't apply to already filled cells
-        if (!filled[i] && potential[i]) {
-          this.setState({ 
-            cell_id: cell_id, 
-            modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
-            () => {this.openModal()})
-    }}}
+      this.setState({modalMessage: message},() => {this.openModal()})
+    } else if (this.otherCellsHavePotential()) {
+      this.setState({modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
+                     () => {this.openModal()})
+    } else {this.toggleCell()}
+  }
+
+  otherCellsHavePotential() {
+    for (let i = 0; i < 15; i++) {
+      if (!this.state.filled[i] && this.state.potential[i]) {
+        return true
+      }
+    }
   }
 
   openModal() { this.setState({modalTrigger: true})}
 
-  closeModal(){ this.setState({ modalTrigger: false })}
+  closeModal(){ this.setState({ modalTrigger: false})}
 
   submitModal(){ 
-    this.setState({ modalTrigger: false })
+    this.setState({ modalTrigger: false})
     this.toggleCell(this.state.cell_id)
   }
 
-  //changes scorecard
   toggleCell() {
     const { filled, score, cell_id, potential } = this.state
-
     this.props.rollClicked && 
-      (filled[cell_id] = true, 
-        score[cell_id] = potential[cell_id])
-    this.setState ({
-      filled: filled,
-      score: score,
-    })
+      (filled[cell_id] = true, score[cell_id] = potential[cell_id])
+    this.setState ({ filled: filled, score: score })
     this.props.handleTableChange()
   }
 
-  // triggered when dice change
 	componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
       if (this.props.roll === 0) {
-        this.resetScores()
+        this.resetTable()
       } else if (this.props.pips !== prevProps.pips) {
-          this.checkDice(this.props.pips)
+          this.organizeDice()
       } else if (this.props.tableClicked !== prevProps.tableClicked) {
         this.checkComplete()
       }
     }
   }
 
-  resetScores() {
+  resetTable() {
     this.setState({
       active: [false, false, false, false, false, false, false,
         false, false, false, false, false, false],
@@ -117,50 +116,42 @@ class TableContainer extends Component {
     !this.state.filled.includes(false) && this.props.gameOver()
   }
 
-  // Logic for real-time updating of scoring options on scoretable
-	checkDice(pips) {
-		let newActive = [...this.state.active];
-    let newPotential = [...this.state.potential];
-    let bonus = this.state.yahtzees;
-    let bonusScore = this.state.score;
-    
-    //Extract dice information from pips
+	organizeDice() {
     let diceObject = {}
-    let diceSum = 0
-    pips.forEach(dice => {
-      diceObject[dice] = (diceObject[dice] || 0)+1
-      diceSum = diceSum + dice + 1 })
-    let pair = Object.values(diceObject).includes(2)
-    let triple = Object.values(diceObject).includes(3)
-    let quadruple = Object.values(diceObject).includes(4)
-    let yahtzee = Object.values(diceObject).includes(5)
-
-    let faces = Object.keys(diceObject)
-    let fiveConsecutive = 
-      (faces.length === 5 && faces[4] - faces[0] === 4)
-    let fourConsecutive =
-      ((faces.length === 5 && 
-        (faces[4] - faces[1] === 3 || faces[3] - faces[0] === 3)) ||
-        (faces.length === 4 && faces[3] - faces[0] === 3))
-    
-    //SCORING OPTIONS FOR UPPER SECTION
-		for (let i = 0; i <= 5; i++) {
-			let count = pips.filter(x => x===i).length;
-			pips.includes(i) ? (
-				newActive[i] = true,
-				newPotential[i] = count*(i+1)
-			) : (  
-				newActive[i] = false,
-				newPotential[i] = 0 )
-    }
+    let diceArray = []
+    this.props.pips.forEach(pip => { diceObject[pip] = (diceObject[pip] || 0)+1})
+    diceArray[0] = Object.values(diceObject).includes(2) //any pairs?
+    diceArray[1] = Object.values(diceObject).includes(3) //any triples?
+    diceArray[2] = Object.values(diceObject).includes(4) //any quadruples?
+    diceArray[3] = Object.values(diceObject).includes(5) //any yahtzees?
+    let sortedPips = Object.keys(diceObject)             
+    diceArray[4] =((sortedPips.length === 5 &&           //any fourconsecutive or fiveconsecutive?
+        (sortedPips[4] - sortedPips[1] === 3 || sortedPips[3] - sortedPips[0] === 3)) ||
+        (sortedPips.length === 4 && sortedPips[3] - sortedPips[0] === 3))
+    diceArray[5] = (sortedPips.length === 5 && sortedPips[4] - sortedPips[0] === 4)
+    this.updateTable(diceArray)
+  }
   
-    //SCORING OPTIONS FOR LOWER SECTION
-    newActive[6] = triple || quadruple || yahtzee
-    newActive[7] = quadruple || yahtzee
-    newActive[8] = triple && pair
-    newActive[9] = fourConsecutive
-    newActive[10] = fiveConsecutive
-    newActive[11] = yahtzee
+  updateTable(diceArray) {
+    let newActive = [...this.state.active]
+    let newPotential = [...this.state.potential]
+    let bonus = this.state.yahtzees
+    let bonusScore = this.state.score
+    const {pips} = this.props
+    //UPPER SECTION
+		for (let i = 0; i <= 5; i++) {
+			let numberOfDice = pips.filter(x => x===i).length;
+      pips.includes(i) ? (newActive[i] = true, newPotential[i] = numberOfDice*(i+1)) 
+                       : (newActive[i] = false, newPotential[i] = 0 )
+    }
+    //LOWER SECTION
+    let diceSum = (pips.reduce((sum, pips) =>  sum + pips)) + 5 
+    newActive[6] = diceArray.slice(1,4).some(elem => !!elem)
+    newActive[7] = diceArray.slice(2,4).some(elem => !!elem)
+    newActive[8] = diceArray[0] && diceArray[1]
+    newActive[9] = diceArray[4]
+    newActive[10] = diceArray[5]
+    newActive[11] = diceArray[3]
     newActive[12] = (this.props.roll === 3)
 
     newActive[6] ? (newPotential[6] = diceSum) : (newPotential[6] = 0)
@@ -170,9 +161,8 @@ class TableContainer extends Component {
     newActive[10] ? (newPotential[10] = 40) : (newPotential[10] = 0)
     newActive[11] ? (newPotential[11] = 50) : (newPotential[11] = 0)
     newPotential[12] = diceSum
-    if (yahtzee && this.state.filled[11]) {bonus += 'X'} 
+    if (diceArray[3] && this.state.filled[11]) {bonus += 'X'} 
     bonusScore[13] = bonus.length * 100
-
     this.setState({
       active: newActive,
       potential: newPotential,
