@@ -20,26 +20,16 @@ class DiceContainer extends Component {
 			gameOver: false,
 		}
 		this.gameOver = this.gameOver.bind(this)
-		this.resetGame = this.resetGame.bind(this)
 		this.toggleHold = this.toggleHold.bind(this)
 		this.handleTableChange = this.handleTableChange.bind(this)
 		this.handleRollClick = this.handleRollClick.bind(this)
+		this.newGame = this.newGame.bind(this)
+		this.newTurn = this.newTurn.bind(this)
 		this.rollDice = this.rollDice.bind(this)
 	}
 
 	gameOver() {
 		this.setState({gameOver: true})
-	}
-
-	resetGame() {
-		this.setState({
-			roll: 0,
-			pips: [0,0,0,0,0],
-			hold: [false, false, false, false, false],
-			rollClicked: true,
-			tableClicked: false,
-			gameOver: false,
-		})
 	}
 
 	// triggered when dice are clicked (callback from Dice.js)
@@ -59,19 +49,37 @@ class DiceContainer extends Component {
 	// triggered when roll button is clicked (callback from RollButton.js)
 	handleRollClick() {
 		if (this.state.gameOver) {
-			this.resetGame()
+			this.newGame()
 		} else if (this.state.roll === 3 && this.state.tableClicked) {
-			this.setState({ roll: 1,
-											hold: [false, false, false, false, false],
-											rollClicked: true,
-											tableClicked: false },
-											() => {this.rollDice()}) //make sure rollDice()
-																							 // has up-to-date state
+			this.newTurn()
 		} else if (this.state.roll != 3) {
-			const rollCount = this.state.roll
-			this.setState({roll: rollCount + 1})
-			this.rollDice()
+			this.newRoll()
 		}
+	}
+
+	newGame() {
+		this.setState({
+			roll: 0,
+			pips: [0,0,0,0,0],
+			hold: [false, false, false, false, false],
+			rollClicked: true,
+			tableClicked: false,
+			gameOver: false,
+		})
+	}
+
+	newTurn() {
+		this.setState({ roll: 1,
+			hold: [false, false, false, false, false],
+			rollClicked: true,
+			tableClicked: false }, 
+			() => {this.rollDice()})
+	}
+
+	newRoll() {
+		const rollCount = this.state.roll
+		this.setState({roll: rollCount + 1})
+		this.rollDice()
 	}
 
 	rollDice() {
