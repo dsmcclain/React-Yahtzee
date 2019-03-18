@@ -18,16 +18,46 @@ class TableContainer extends Component {
                false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       yahtzees: '',
-      cellId: null,
+      cell_id: null,
       modalTrigger: false,
       modalMessage: '',
     }
-    this.onCellClick = this.onCellClick.bind(this)
+    this.handleCellClick = this.handleCellClick.bind(this)
+    this.setModalMessage = this.setModalMessage.bind(this)
     this.toggleCell = this.toggleCell.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.submitModal = this.submitModal.bind(this)
     this.checkComplete = this.checkComplete.bind(this)
     this.resetScores = this.resetScores.bind(this)
+  }
+
+  handleCellClick(cell_id) {
+    if (this.props.roll !== 0 && !this.state.filled[cell_id]) {
+      if (this.props.roll < 3 || this.state.potential[cell_id] === 0 ) {
+        !this.props.tableClicked && this.setModalMessage(cell_id)
+      } else {
+        this.toggleCell(cell_id)
+      }
+    }
+  }
+
+  setModalMessage(cell_id) {
+    if (this.props.roll < 3 ) {
+      let message = 'Are you sure you want to end your turn? You can still roll again.'
+      this.state.potential[cell_id] === 0 && 
+        (message += ' (This will result in a score of zero for this item.)')
+      this.setState({ 
+        cell_id: cell_id,
+        modalMessage: message},
+        () => {this.openModal()})
+    } else if (this.state.potential[cell_id] === 0) {
+      for (let i = 0; i < 15; i++) {  //better way to do this? if only the 'potential' state didn't apply to already filled cells
+        if (!this.state.filled[i] && this.state.potential[i]) {
+          this.setState({ 
+            cell_id: cell_id, 
+            modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
+            () => {this.openModal()})
+    }}}
   }
 
   openModal() { this.setState({modalTrigger: true})}
@@ -36,46 +66,17 @@ class TableContainer extends Component {
 
   submitModal(){ 
     this.setState({ modalTrigger: false })
-    this.toggleCell(this.state.cellId)
-  }
-
-  //This function checks for whether a modal should be called
-  //before making changes to scorecard (callback from Cell.js)
-  onCellClick(id) {
-    if (this.props.roll !== 0) {
-      let modalTrigger = false
-      if (!this.state.filled[id] && !this.props.tableClicked) {
-        if (this.props.roll < 3 ) {
-        modalTrigger = true
-        let message = 'Are you sure you want to end your turn? You can still roll again.'
-        this.state.potential[id] === 0 && 
-          (message += ' (This will result in a score of zero for this item.)')
-        this.setState({ 
-            cellId: id,
-            modalMessage: message},
-          () => {this.openModal()})
-        } else if (this.state.potential[id] === 0) {
-        for (let i = 0; i < 15; i++) {
-            if (!this.state.filled[i] && this.state.potential[i]) {
-              modalTrigger = true
-              this.setState({ 
-                cellId: id, 
-                modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
-                () => {this.openModal()})
-            }
-      }}}
-      (!modalTrigger && !this.state.filled[id]) && this.toggleCell(id)
-    }
+    this.toggleCell(this.state.cell_id)
   }
 
   //changes scorecard
-  toggleCell(id) {
+  toggleCell(cell_id) {
     let fills = this.state.filled;
     let scores = this.state.score;
 
     this.props.rollClicked && 
-      (fills[id] = true, 
-        scores[id] = this.state.potential[id])
+      (fills[cell_id] = true, 
+        scores[cell_id] = this.state.potential[cell_id])
     this.setState ({
       filled: fills,
       score: scores,
@@ -105,7 +106,7 @@ class TableContainer extends Component {
         false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       yahtzees: '',
-      cellId: null,
+      cellcell_id: null,
       modalTrigger: false,
       modalMessage: '',
     })
@@ -195,7 +196,7 @@ class TableContainer extends Component {
                   potential={this.state.potential}
                   filled={this.state.filled}
                   score={this.state.score}
-                  toggleCell={this.onCellClick} />
+                  toggleCell={this.handleCellClick} />
             <UpperSums score={this.state.score} filled={this.state.filled}/>
             </tbody>
         </table>
@@ -208,7 +209,7 @@ class TableContainer extends Component {
                   potential={this.state.potential}
                   filled={this.state.filled}
                   score={this.state.score}
-                  toggleCell={this.onCellClick} />
+                  toggleCell={this.handleCellClick} />
             <Bonus yahtzees={this.state.yahtzees} />
             <LowerSums score={this.state.score} filled={this.state.filled}/>
             </tbody>
