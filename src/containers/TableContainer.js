@@ -34,25 +34,27 @@ class TableContainer extends Component {
   handleCellClick(cell_id) {
     if (this.props.roll !== 0 && !this.state.filled[cell_id]) {
       if (this.props.roll < 3 || this.state.potential[cell_id] === 0 ) {
-        !this.props.tableClicked && this.setModalMessage(cell_id)
-      } else {
-        this.toggleCell(cell_id)
+        if (!this.props.tableClicked) {
+          this.setState({ cell_id: cell_id }, () => {this.setModalMessage()})
+      }} else {
+        this.setState({ cell_id: cell_id }, () => {this.toggleCell()})
       }
     }
   }
 
-  setModalMessage(cell_id) {
+  setModalMessage() {
+    const { cell_id, filled, potential } = this.state
     if (this.props.roll < 3 ) {
       let message = 'Are you sure you want to end your turn? You can still roll again.'
-      this.state.potential[cell_id] === 0 && 
+      potential[cell_id] === 0 && 
         (message += ' (This will result in a score of zero for this item.)')
       this.setState({ 
         cell_id: cell_id,
         modalMessage: message},
         () => {this.openModal()})
-    } else if (this.state.potential[cell_id] === 0) {
+    } else if (potential[cell_id] === 0) {
       for (let i = 0; i < 15; i++) {  //better way to do this? if only the 'potential' state didn't apply to already filled cells
-        if (!this.state.filled[i] && this.state.potential[i]) {
+        if (!filled[i] && potential[i]) {
           this.setState({ 
             cell_id: cell_id, 
             modalMessage: 'Are you sure you want to put a zero here? You could score more points elsewhere.'}, 
@@ -70,16 +72,15 @@ class TableContainer extends Component {
   }
 
   //changes scorecard
-  toggleCell(cell_id) {
-    let fills = this.state.filled;
-    let scores = this.state.score;
+  toggleCell() {
+    const { filled, score, cell_id, potential } = this.state
 
     this.props.rollClicked && 
-      (fills[cell_id] = true, 
-        scores[cell_id] = this.state.potential[cell_id])
+      (filled[cell_id] = true, 
+        score[cell_id] = potential[cell_id])
     this.setState ({
-      filled: fills,
-      score: scores,
+      filled: filled,
+      score: score,
     })
     this.props.handleTableChange()
   }
