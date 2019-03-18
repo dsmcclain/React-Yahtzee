@@ -11,14 +11,7 @@ class DiceContainer extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			roll: 0,
-			pips: [0,0,0,0,0],
-			hold: [false, false, false, false, false],
-			rollClicked: true,
-			tableClicked: false,
-			gameOver: false,
-		}
+		this.state = INITIAL_STATE
 		this.gameOver = this.gameOver.bind(this)
 		this.toggleHold = this.toggleHold.bind(this)
 		this.handleTableChange = this.handleTableChange.bind(this)
@@ -58,14 +51,7 @@ class DiceContainer extends Component {
 	}
 
 	newGame() {
-		this.setState({
-			roll: 0,
-			pips: [0,0,0,0,0],
-			hold: [false, false, false, false, false],
-			rollClicked: true,
-			tableClicked: false,
-			gameOver: false,
-		})
+		this.setState(INITIAL_STATE)
 	}
 
 	newTurn() {
@@ -125,6 +111,15 @@ class DiceContainer extends Component {
 			</div>
 		)
 	}
+}
+
+const INITIAL_STATE = {
+	roll: 0,
+	pips: [0,0,0,0,0],
+	hold: [false, false, false, false, false],
+	rollClicked: true,
+	tableClicked: false,
+	gameOver: false,
 }
 
 export default hot (module)(DiceContainer);

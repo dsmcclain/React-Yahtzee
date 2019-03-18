@@ -10,18 +10,7 @@ import "../styles/ScoreTable.css"
 class TableContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      active: [false, false, false, false, false, false, false,
-               false, false, false, false, false, false],
-      potential: [0,0,0,0,0,0,0,0,0,0,0,0,0],
-      filled: [false, false, false, false, false, false, false,
-               false, false, false, false, false, false],
-      score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      yahtzees: '',
-      cell_id: null,
-      modalTrigger: false,
-      modalMessage: '',
-    }
+    this.state = INITIAL_STATE
     this.handleCellClick = this.handleCellClick.bind(this)
     this.cellIsClickable = this.cellIsClickable.bind(this)
     this.otherCellsHavePotential = this.otherCellsHavePotential.bind(this)
@@ -106,7 +95,7 @@ class TableContainer extends Component {
         false, false, false, false, false, false],
       score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       yahtzees: '',
-      cellcell_id: null,
+      cell_id: null,
       modalTrigger: false,
       modalMessage: '',
     })
@@ -208,6 +197,19 @@ class TableContainer extends Component {
       </div>
     )
   }
+}
+
+const INITIAL_STATE = {
+  active: [false, false, false, false, false, false, false,
+    false, false, false, false, false, false],
+  potential: [0,0,0,0,0,0,0,0,0,0,0,0,0],
+  filled: [false, false, false, false, false, false, false,
+    false, false, false, false, false, false],
+  score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  yahtzees: '',
+  cell_id: null,
+  modalTrigger: false,
+  modalMessage: '',
 }
 
 const UPPER_ITEMS = [
