@@ -17,7 +17,6 @@ class DiceContainer extends Component {
 		this.handleTableChange = this.handleTableChange.bind(this)
 		this.handleRollClick = this.handleRollClick.bind(this)
 		this.newGame = this.newGame.bind(this)
-		this.newTurn = this.newTurn.bind(this)
 		this.rollDice = this.rollDice.bind(this)
 	}
 
@@ -54,7 +53,7 @@ class DiceContainer extends Component {
 		this.setState(INITIAL_STATE)
 	}
 
-	newTurn() {
+	newTurn = () => {
 		this.setState({ roll: 1,
 			hold: [false, false, false, false, false],
 			rollClicked: true,
