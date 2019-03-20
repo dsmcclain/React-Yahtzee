@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {hot} from "react-hot-loader";
 
 // import images of dice faces
@@ -10,23 +10,17 @@ import five from '../images/five.png';
 import six from '../images/six.png';
 
 class Dice extends Component {
-	constructor(props) {
-		super(props);
-		this.holdDice = this.holdDice.bind(this);
-	}
-
-	holdDice() {
+	holdDice = () => {
 		this.props.toggleHold(this.props.id);
 	}
 
-	//images array is used to select imported images based on pips state
-	render() {
-		const images = [one, two, three, four, five, six]
+	render () {
+		const diceImages = [one, two, three, four, five, six]
 		return (
 			<div className={`dice-container ${this.props.hold ? "hold" : "free"}`}>
-				<img src={images[this.props.pips]} onClick={this.holdDice} />
+				<img src={diceImages[this.props.pips]} onClick={this.holdDice} />
 			</div>
-		);
+		)
 	}
 }
 export default hot(module)(Dice);
