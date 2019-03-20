@@ -8,21 +8,9 @@ import Modal from "../components/Modal.js"
 import "../styles/ScoreTable.css"
 
 class TableContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = INITIAL_STATE
-    this.handleCellClick = this.handleCellClick.bind(this)
-    this.cellIsClickable = this.cellIsClickable.bind(this)
-    this.otherCellsHavePotential = this.otherCellsHavePotential.bind(this)
-    this.setModalMessage = this.setModalMessage.bind(this)
-    this.toggleCell = this.toggleCell.bind(this)
-    this.closeModal = this.closeModal.bind(this)
-    this.submitModal = this.submitModal.bind(this)
-    this.checkComplete = this.checkComplete.bind(this)
-    this.resetTable = this.resetTable.bind(this)
-  }
+  state = INITIAL_STATE
 
-  handleCellClick(cell_id) {
+  handleCellClick = (cell_id) => {
     if (this.cellIsClickable(cell_id)) {
       if (this.props.roll < 3 || this.state.potential[cell_id] === 0 ) {
         this.setState({ cell_id: cell_id }, () => {this.setModalMessage()})
@@ -32,11 +20,11 @@ class TableContainer extends Component {
     }
   }
 
-  cellIsClickable(cell_id) {
+  cellIsClickable = (cell_id) => {
     return (this.props.roll !== 0 && !this.props.tableClicked && !this.state.filled[cell_id])
   }
 
-  setModalMessage() {
+  setModalMessage = () => {
     const { cell_id, potential } = this.state
     if (this.props.roll < 3 ) {
       let message = 'Are you sure you want to end your turn? You can still roll again.'
@@ -49,7 +37,7 @@ class TableContainer extends Component {
     } else {this.toggleCell()}
   }
 
-  otherCellsHavePotential() {
+  otherCellsHavePotential = () => {
     for (let i = 0; i < 15; i++) {
       if (!this.state.filled[i] && this.state.potential[i]) {
         return true
@@ -57,16 +45,16 @@ class TableContainer extends Component {
     }
   }
 
-  openModal() { this.setState({modalTrigger: true})}
+  openModal = () => { this.setState({modalTrigger: true})}
 
-  closeModal(){ this.setState({ modalTrigger: false})}
+  closeModal = () => { this.setState({ modalTrigger: false})}
 
-  submitModal(){ 
+  submitModal = () => { 
     this.setState({ modalTrigger: false})
     this.toggleCell(this.state.cell_id)
   }
 
-  toggleCell() {
+  toggleCell = () => {
     const { filled, score, cell_id, potential } = this.state
     this.props.rollClicked && 
       (filled[cell_id] = true, score[cell_id] = potential[cell_id])
@@ -74,7 +62,7 @@ class TableContainer extends Component {
     this.props.handleTableChange()
   }
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate = (prevProps) => {
     if (this.props !== prevProps) {
       if (this.props.roll === 0) {
         this.resetTable()
@@ -86,7 +74,7 @@ class TableContainer extends Component {
     }
   }
 
-  resetTable() {
+  resetTable = () => {
     this.setState({
       active: [false, false, false, false, false, false, false,
         false, false, false, false, false, false],
@@ -101,11 +89,11 @@ class TableContainer extends Component {
     })
   }
   
-  checkComplete() {
+  checkComplete = () => {
     !this.state.filled.includes(false) && this.props.gameOver()
   }
 
-	organizeDice() {
+	organizeDice = () => {
     let diceObject = {}
     let diceArray = []
     this.props.pips.forEach(pip => { diceObject[pip] = (diceObject[pip] || 0)+1})
@@ -121,7 +109,7 @@ class TableContainer extends Component {
     this.updateTable(diceArray)
   }
   
-  updateTable(diceArray) {
+  updateTable = (diceArray) => {
     let newActive = [...this.state.active]
     let newPotential = [...this.state.potential]
     let bonus = this.state.yahtzees
