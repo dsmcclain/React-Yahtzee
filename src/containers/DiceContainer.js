@@ -8,24 +8,14 @@ import TableContainer from "./TableContainer.js"
 import "../styles/DiceContainer.css"
 
 class DiceContainer extends Component {
-	constructor(props) {
-		super(props);
+	state = INITIAL_STATE
 
-		this.state = INITIAL_STATE
-		this.gameOver = this.gameOver.bind(this)
-		this.toggleHold = this.toggleHold.bind(this)
-		this.handleTableChange = this.handleTableChange.bind(this)
-		this.handleRollClick = this.handleRollClick.bind(this)
-		this.newGame = this.newGame.bind(this)
-		this.rollDice = this.rollDice.bind(this)
-	}
-
-	gameOver() {
+	gameOver = () => {
 		this.setState({gameOver: true})
 	}
 
 	// triggered when dice are clicked (callback from Dice.js)
-	toggleHold(id) {
+	toggleHold = (id) => {
 		if (this.state.roll !== 0) {
 			let holds = this.state.hold
 			holds[id] = !holds[id]
@@ -34,12 +24,12 @@ class DiceContainer extends Component {
 	}
 
 	// (callback from TableContainer.js)
-	handleTableChange() {
+	handleTableChange = () => {
 		this.setState({tableClicked: true, rollClicked: false, roll: 3})
 	}
 
 	// triggered when roll button is clicked (callback from RollButton.js)
-	handleRollClick() {
+	handleRollClick = () => {
 		if (this.state.gameOver) {
 			this.newGame()
 		} else if (this.state.roll === 3 && this.state.tableClicked) {
@@ -49,7 +39,7 @@ class DiceContainer extends Component {
 		}
 	}
 
-	newGame() {
+	newGame = () => {
 		this.setState(INITIAL_STATE)
 	}
 
@@ -61,13 +51,13 @@ class DiceContainer extends Component {
 			() => {this.rollDice()})
 	}
 
-	newRoll() {
+	newRoll = () => {
 		const rollCount = this.state.roll
 		this.setState({roll: rollCount + 1})
 		this.rollDice()
 	}
 
-	rollDice() {
+	rollDice = () => {
 		let newPips = [...this.state.pips];
 		for (let i = 0; i < 5; i++){
 			if (!this.state.hold[i]) {
