@@ -94,22 +94,39 @@ class TableContainer extends Component {
   }
 
 	organizeDice = () => {
-    let diceObject = {}
-    let diceArray = []
-    this.props.pips.forEach(pip => { diceObject[pip] = (diceObject[pip] || 0)+1})
-    diceArray[0] = Object.values(diceObject).includes(2) //any pairs?
-    diceArray[1] = Object.values(diceObject).includes(3) //any triples?
-    diceArray[2] = Object.values(diceObject).includes(4) //any quadruples?
-    diceArray[3] = Object.values(diceObject).includes(5) //any yahtzees?
-    let sortedPips = Object.keys(diceObject)             
-    diceArray[4] =((sortedPips.length === 5 &&           //any fourconsecutive or fiveconsecutive?
-        (sortedPips[4] - sortedPips[1] === 3 || sortedPips[3] - sortedPips[0] === 3)) ||
-        (sortedPips.length === 4 && sortedPips[3] - sortedPips[0] === 3))
-    diceArray[5] = (sortedPips.length === 5 && sortedPips[4] - sortedPips[0] === 4)
-    this.updateTable(diceArray)
+    let whatDiceDoIHave = {}
+    this.props.pips.forEach(dice => { whatDiceDoIHave[dice] = (whatDiceDoIHave[dice] || 0)+1})
+    this.updateTable(whatDiceDoIHave)
+  }
+
+  anyPairs = (whatDiceDoIHave) => {
+    return Object.values(whatDiceDoIHave).includes(2)
+  }
+
+  anyTriples = (whatDiceDoIHave) => {
+    return Object.values(whatDiceDoIHave).includes(3)
+  }
+
+  anyQuadruples = (whatDiceDoIHave) => {
+    return Object.values(whatDiceDoIHave).includes(4)
+  }
+
+  anyYahtzees = (whatDiceDoIHave) => {
+    return Object.values(whatDiceDoIHave).includes(5)
+  }
+
+  anyFourConsecutive = (whatDiceDoIHave) => {
+    let sortedPips = Object.keys(whatDiceDoIHave)
+    return (sortedPips.length === 5) &&
+      (sortedPips[4] - sortedPips[1] === 3 || sortedPips[3] - sortedPips[0] === 3) || (sortedPips.length === 4 && sortedPips[3] - sortedPips[0] === 3)
+  }
+
+  anyFiveConsecutive = (whatDiceDoIHave) => {
+    let sortedPips = Object.keys(whatDiceDoIHave)
+    return sortedPips.length === 5 && (sortedPips[4] - sortedPips[0] === 4)
   }
   
-  updateTable = (diceArray) => {
+  updateTable = (whatDiceDoIHave) => {
     let newActive = [...this.state.active]
     let newPotential = [...this.state.potential]
     let bonus = this.state.yahtzees
@@ -122,13 +139,14 @@ class TableContainer extends Component {
                        : (newActive[i] = false, newPotential[i] = 0 )
     }
     //LOWER SECTION
+    console.log(this.anyTriples(whatDiceDoIHave))
     let diceSum = (pips.reduce((sum, pips) =>  sum + pips)) + 5 
-    newActive[6] = diceArray.slice(1,4).some(elem => !!elem)
-    newActive[7] = diceArray.slice(2,4).some(elem => !!elem)
-    newActive[8] = diceArray[0] && diceArray[1]
-    newActive[9] = diceArray[4]
-    newActive[10] = diceArray[5]
-    newActive[11] = diceArray[3]
+    newActive[6] = this.anyTriples(whatDiceDoIHave) || this.anyQuadruples(whatDiceDoIHave) || this.anyYahtzees(whatDiceDoIHave)
+    newActive[7] = this.anyQuadruples(whatDiceDoIHave) || this.anyYahtzees(whatDiceDoIHave)
+    newActive[8] = this.anyPairs(whatDiceDoIHave) && this.anyTriples(whatDiceDoIHave)
+    newActive[9] = this.anyFourConsecutive(whatDiceDoIHave)
+    newActive[10] = this.anyFiveConsecutive(whatDiceDoIHave)
+    newActive[11] = this.anyYahtzees(whatDiceDoIHave)
     newActive[12] = (this.props.roll === 3)
 
     newActive[6] ? (newPotential[6] = diceSum) : (newPotential[6] = 0)
@@ -138,7 +156,7 @@ class TableContainer extends Component {
     newActive[10] ? (newPotential[10] = 40) : (newPotential[10] = 0)
     newActive[11] ? (newPotential[11] = 50) : (newPotential[11] = 0)
     newPotential[12] = diceSum
-    if (diceArray[3] && this.state.filled[11]) {bonus += 'X'} 
+    if (this.anyYahtzees(whatDiceDoIHave) && this.state.filled[11]) {bonus += 'X'} 
     bonusScore[13] = bonus.length * 100
     this.setState({
       active: newActive,
