@@ -8,7 +8,18 @@ import Modal from "../components/Modal.js"
 import "../styles/ScoreTable.css"
 
 class TableContainer extends Component {
-  state = INITIAL_STATE
+  state = {
+    active: [false, false, false, false, false, false, false,
+      false, false, false, false, false, false],
+    potential: [0,0,0,0,0,0,0,0,0,0,0,0,0],
+    filled: [false, false, false, false, false, false, false,
+      false, false, false, false, false, false],
+    score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    yahtzees: '',
+    cell_id: null,
+    modalTrigger: false,
+    modalMessage: '',
+  }
 
   handleCellClick = (cell_id) => {
     if (this.cellIsClickable(cell_id)) {
@@ -96,7 +107,20 @@ class TableContainer extends Component {
 	organizeDice = () => {
     let whatDiceDoIHave = {}
     this.props.pips.forEach(dice => { whatDiceDoIHave[dice] = (whatDiceDoIHave[dice] || 0)+1})
-    this.updateTable(whatDiceDoIHave)
+    this.activateLowerCells(whatDiceDoIHave)
+  }
+    
+  activateLowerCells = (whatDiceDoIHave) => {
+    let newActive = [...this.state.active]
+    newActive[6] = this.anyTriples(whatDiceDoIHave) || this.anyQuadruples(whatDiceDoIHave) || this.anyYahtzees(whatDiceDoIHave)
+    newActive[7] = this.anyQuadruples(whatDiceDoIHave) || this.anyYahtzees(whatDiceDoIHave)
+    newActive[8] = this.anyPairs(whatDiceDoIHave) && this.anyTriples(whatDiceDoIHave)
+    newActive[9] = this.anyFourConsecutive(whatDiceDoIHave)
+    newActive[10] = this.anyFiveConsecutive(whatDiceDoIHave)
+    newActive[11] = this.anyYahtzees(whatDiceDoIHave)
+    newActive[12] = (this.props.roll === 3)
+    if (this.anyYahtzees(whatDiceDoIHave) && this.state.filled[11]) {this.calculateYahtzeeBonus}
+    this.calculateLowerValues(newActive)
   }
 
   anyPairs = (whatDiceDoIHave) => {
@@ -117,38 +141,26 @@ class TableContainer extends Component {
 
   anyFourConsecutive = (whatDiceDoIHave) => {
     let sortedPips = Object.keys(whatDiceDoIHave)
-    return (sortedPips.length === 5) &&
-      (sortedPips[4] - sortedPips[1] === 3 || sortedPips[3] - sortedPips[0] === 3) || (sortedPips.length === 4 && sortedPips[3] - sortedPips[0] === 3)
+    return (sortedPips.length === 5) && (sortedPips[4] - sortedPips[1] === 3 || sortedPips[3] - sortedPips[0] === 3) 
+                                     || (sortedPips.length === 4 && sortedPips[3] - sortedPips[0] === 3)
   }
 
   anyFiveConsecutive = (whatDiceDoIHave) => {
     let sortedPips = Object.keys(whatDiceDoIHave)
     return sortedPips.length === 5 && (sortedPips[4] - sortedPips[0] === 4)
   }
-  
-  updateTable = (whatDiceDoIHave) => {
-    let newActive = [...this.state.active]
-    let newPotential = [...this.state.potential]
+
+  calculateYahtzeeBonus = () => {
     let bonus = this.state.yahtzees
     let bonusScore = this.state.score
-    const {pips} = this.props
-    //UPPER SECTION
-		for (let i = 0; i <= 5; i++) {
-			let numberOfDice = pips.filter(x => x===i).length;
-      pips.includes(i) ? (newActive[i] = true, newPotential[i] = numberOfDice*(i+1)) 
-                       : (newActive[i] = false, newPotential[i] = 0 )
-    }
-    //LOWER SECTION
-    console.log(this.anyTriples(whatDiceDoIHave))
-    let diceSum = (pips.reduce((sum, pips) =>  sum + pips)) + 5 
-    newActive[6] = this.anyTriples(whatDiceDoIHave) || this.anyQuadruples(whatDiceDoIHave) || this.anyYahtzees(whatDiceDoIHave)
-    newActive[7] = this.anyQuadruples(whatDiceDoIHave) || this.anyYahtzees(whatDiceDoIHave)
-    newActive[8] = this.anyPairs(whatDiceDoIHave) && this.anyTriples(whatDiceDoIHave)
-    newActive[9] = this.anyFourConsecutive(whatDiceDoIHave)
-    newActive[10] = this.anyFiveConsecutive(whatDiceDoIHave)
-    newActive[11] = this.anyYahtzees(whatDiceDoIHave)
-    newActive[12] = (this.props.roll === 3)
+    bonus += 'X'
+    bonusScore[13] = bonus.length * 100
+    this.setState({ yahtzees: bonus, score: bonusScore})
+  }
 
+  calculateLowerValues = (newActive) => {
+    let newPotential = [...this.state.potential]
+    let diceSum = (this.props.pips.reduce((sum, pips) =>  sum + pips)) + 5 
     newActive[6] ? (newPotential[6] = diceSum) : (newPotential[6] = 0)
     newActive[7] ? (newPotential[7] = diceSum) : (newPotential[7] = 0)
     newActive[8] ? (newPotential[8] = 25) : (newPotential[8] = 0)
@@ -156,13 +168,22 @@ class TableContainer extends Component {
     newActive[10] ? (newPotential[10] = 40) : (newPotential[10] = 0)
     newActive[11] ? (newPotential[11] = 50) : (newPotential[11] = 0)
     newPotential[12] = diceSum
-    if (this.anyYahtzees(whatDiceDoIHave) && this.state.filled[11]) {bonus += 'X'} 
-    bonusScore[13] = bonus.length * 100
+    this.calculateUpperValues(newActive, newPotential)
+  }
+
+  calculateUpperValues = (newActive, newPotential) => {
+    for (let i = 0; i <= 5; i++) {
+			let numberOfDice = this.props.pips.filter(x => x===i).length;
+      this.props.pips.includes(i) ? (newActive[i] = true, newPotential[i] = numberOfDice*(i+1)) 
+                       : (newActive[i] = false, newPotential[i] = 0 )
+    }
+    this.updateTable(newActive, newPotential)
+  }
+
+  updateTable = (newActive, newPotential) => {
     this.setState({
       active: newActive,
       potential: newPotential,
-      yahtzees: bonus,
-      score: bonusScore,
     })
   }
 
@@ -203,19 +224,6 @@ class TableContainer extends Component {
       </div>
     )
   }
-}
-
-const INITIAL_STATE = {
-  active: [false, false, false, false, false, false, false,
-    false, false, false, false, false, false],
-  potential: [0,0,0,0,0,0,0,0,0,0,0,0,0],
-  filled: [false, false, false, false, false, false, false,
-    false, false, false, false, false, false],
-  score: [0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-  yahtzees: '',
-  cell_id: null,
-  modalTrigger: false,
-  modalMessage: '',
 }
 
 const UPPER_ITEMS = [

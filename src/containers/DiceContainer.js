@@ -8,7 +8,14 @@ import TableContainer from "./TableContainer.js"
 import "../styles/DiceContainer.css"
 
 class DiceContainer extends Component {
-	state = INITIAL_STATE
+	state = {
+		roll: 0,
+		pips: [0,0,0,0,0],
+		hold: [false, false, false, false, false],
+		rollClicked: true,
+		tableClicked: false,
+		gameOver: false,
+	}
 
 	gameOver = () => {
 		this.setState({gameOver: true})
@@ -40,7 +47,14 @@ class DiceContainer extends Component {
 	}
 
 	newGame = () => {
-		this.setState(INITIAL_STATE)
+		this.setState({
+			roll: 0,
+			pips: [0,0,0,0,0],
+			hold: [false, false, false, false, false],
+			rollClicked: true,
+			tableClicked: false,
+			gameOver: false,
+		})
 	}
 
 	newTurn = () => {
@@ -100,15 +114,6 @@ class DiceContainer extends Component {
 			</div>
 		)
 	}
-}
-
-const INITIAL_STATE = {
-	roll: 0,
-	pips: [0,0,0,0,0],
-	hold: [false, false, false, false, false],
-	rollClicked: true,
-	tableClicked: false,
-	gameOver: false,
 }
 
 export default hot (module)(DiceContainer);
