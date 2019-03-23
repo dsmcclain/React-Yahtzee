@@ -21,8 +21,8 @@ class DiceContainer extends Component {
 		this.setState({gameOver: true})
 	}
 
-	// triggered when dice are clicked (callback from Dice.js)
-	toggleHold = (id) => {
+	// (callback from Dice.js)
+	toggleDiceHold = (id) => {
 		if (this.state.roll !== 0) {
 			let holds = this.state.hold
 			holds[id] = !holds[id]
@@ -35,7 +35,7 @@ class DiceContainer extends Component {
 		this.setState({tableClicked: true, rollClicked: false, roll: 3})
 	}
 
-	// triggered when roll button is clicked (callback from RollButton.js)
+	// (callback from RollButton.js)
 	handleRollClick = () => {
 		if (this.state.gameOver) {
 			this.newGame()
@@ -87,11 +87,11 @@ class DiceContainer extends Component {
 			<div className="app-container">
 				<div className="dice-area">
 					<div className="dice-bar">
-						<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleHold={this.toggleHold} />
-						<Dice id={1} pips={this.state.pips[1]} hold={this.state.hold[1]} toggleHold={this.toggleHold} />
-						<Dice id={2} pips={this.state.pips[2]} hold={this.state.hold[2]} toggleHold={this.toggleHold} />
-						<Dice id={3} pips={this.state.pips[3]} hold={this.state.hold[3]} toggleHold={this.toggleHold} />
-						<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleHold={this.toggleHold} />
+						<Dice id={0} pips={this.state.pips[0]} hold={this.state.hold[0]} toggleDiceHold={this.toggleDiceHold} />
+						<Dice id={1} pips={this.state.pips[1]} hold={this.state.hold[1]} toggleDiceHold={this.toggleDiceHold} />
+						<Dice id={2} pips={this.state.pips[2]} hold={this.state.hold[2]} toggleDiceHold={this.toggleDiceHold} />
+						<Dice id={3} pips={this.state.pips[3]} hold={this.state.hold[3]} toggleDiceHold={this.toggleDiceHold} />
+						<Dice id={4} pips={this.state.pips[4]} hold={this.state.hold[4]} toggleDiceHold={this.toggleDiceHold} />
 					</div>	
 				<div>
 				<div className = "roll-area">

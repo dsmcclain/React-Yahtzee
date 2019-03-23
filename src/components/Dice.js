@@ -11,7 +11,7 @@ import six from '../images/six.png';
 
 class Dice extends Component {
 	holdDice = () => {
-		this.props.toggleHold(this.props.id);
+		this.props.toggleDiceHold(this.props.id);
 	}
 
 	render () {

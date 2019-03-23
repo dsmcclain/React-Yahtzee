@@ -153,7 +153,7 @@ class TableContainer extends Component {
   }
 
   calculateLowerValues = (newActive) => {
-    let newPotential = [...this.state.potential]
+    let newPotential = []
     let diceSum = (this.props.pips.reduce((sum, pips) =>  sum + pips)) + 5 
     newPotential[6] = (newActive[6] ? diceSum : 0)
     newPotential[7] = (newActive[7] ? diceSum : 0)
