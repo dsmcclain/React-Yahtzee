@@ -18,7 +18,7 @@
     "url": "https://github.com/dsmcclain/React-Yahtzee/issues"
   },
   "homepage": "https://github.com/dsmcclain/React-Yahtzee#readme",
-  "devDependencies": {
+  "dependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
@@ -31,9 +31,7 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14"
-  },
-  "dependencies": {
+    "webpack-dev-server": "^3.1.14",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-hot-loader": "^4.6.3"
