@@ -4,7 +4,7 @@
   "description": "Yahtzee, built with React, by dsmcclain",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "babel src -d lib",
     "start": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
