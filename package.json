@@ -4,8 +4,8 @@
   "description": "Yahtzee, built with React, by dsmcclain",
   "main": "index.js",
   "scripts": {
-    "build": "babel src -d lib",
-    "start": "webpack-dev-server --port $PORT --host 0.0.0.0 --disableHostCheck",
+    "build": "NODE_ENV=production webpack -p --config ./webpack.config.js; cp dist/bundle.js public/bundle.js",
+    "start": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
