@@ -1,5 +1,5 @@
 body {
-	background: #80D0FF;
+	background: oldlace;
 }
 .app-container {
 	display: flex;
@@ -27,7 +27,7 @@ body {
 	margin: .5em;
 }
 .dice-bar > .free {
-	border: 10px solid #FFFE90;
+	border: 10px solid moccasin;
 }
 .dice-bar > .hold {
 	border: 10px solid #F00;
@@ -50,7 +50,7 @@ body {
 	margin: 15px;
 }
 .roll-canvas {
-	background-color: #FFFE90;	
+	background-color: moccasin;
 	cursor: default;
 	box-shadow: -6px 6px 2px #888;
 	display: flex;
@@ -78,7 +78,7 @@ body {
 	width: 130px;
 	height: 130px;
 	cursor: pointer;
-	border: 10px solid #FFFE90;;
+	border: 10px solid moccasin;
 }
 .reroll {
 	border: 10px solid #F00;
