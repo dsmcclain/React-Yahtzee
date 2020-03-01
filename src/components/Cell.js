@@ -8,14 +8,17 @@ class Cell extends Component{
   }
 
   render() {
-    let cell;
-    this.props.filled ? (cell = this.props.score) 
-    : (cell = this.props.potential)
+    let score = this.props.filled ? this.props.score : this.props.potential
+    let className = this.props.filled ? "filled" : (this.props.active ? "active" : "empty")
     
     return (
-      <td className={`cell ${this.props.filled ? "filled" : 
-          (this.props.active ? "active" : "empty")}`} 
-          onClick={this.cellClick}>{cell}</td>
+      <td className={`score-cell ${className}`}>
+        <div className={`score ${className}`}
+            onClick={this.cellClick}
+        >
+          {score}
+        </div>
+      </td>
     )
   }
 }
